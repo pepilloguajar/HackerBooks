@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		929BF16A1E40BD8200698665 /* Tags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929BF1691E40BD8200698665 /* Tags.swift */; };
 		92C0C6D71E34D0AB00AD86C7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C0C6D61E34D0AB00AD86C7 /* AppDelegate.swift */; };
 		92C0C6D91E34D0AB00AD86C7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C0C6D81E34D0AB00AD86C7 /* ViewController.swift */; };
 		92C0C6DC1E34D0AB00AD86C7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92C0C6DA1E34D0AB00AD86C7 /* Main.storyboard */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		929BF1691E40BD8200698665 /* Tags.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tags.swift; sourceTree = "<group>"; };
 		92C0C6D31E34D0AB00AD86C7 /* HackerBooks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HackerBooks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92C0C6D61E34D0AB00AD86C7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		92C0C6D81E34D0AB00AD86C7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				92C0C6EE1E34D33B00AD86C7 /* Books.swift */,
+				929BF1691E40BD8200698665 /* Tags.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -171,6 +174,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				929BF16A1E40BD8200698665 /* Tags.swift in Sources */,
 				92C0C6EF1E34D33B00AD86C7 /* Books.swift in Sources */,
 				92C0C6D91E34D0AB00AD86C7 /* ViewController.swift in Sources */,
 				92C0C6D71E34D0AB00AD86C7 /* AppDelegate.swift in Sources */,
@@ -333,6 +337,7 @@
 				92C0C6E71E34D0AB00AD86C7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

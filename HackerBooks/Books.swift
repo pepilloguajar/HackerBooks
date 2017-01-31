@@ -10,33 +10,36 @@ import Foundation
 import UIKit
 
 typealias Author = String
-typealias Tag = String
+typealias Authors = [Author]
+typealias Tags = Set<Tag>
+typealias Pdf = URL
+typealias Image  = URL
 
 class Book {
     
     //MARK: - Stored properties
     let title : String
-    let authors : [Author]
-    let tags : [Tag]
-    let urlBookCover : URL
-    let urlBookPDF : URL
+    let authors : Authors
+    let tags : Tags
+    let urlBookCover : Image
+    let urlBookPDF : Pdf
 
     //MARK: - computed properties
     var authorsName : String {
         get{
-            return authors.joined(separator: ",")
+            return authors.sorted().joined(separator: ",")
         }
     }
     
     var tagsName : String {
         get{
-            return tags.joined(separator: ",")
+            return tags.sorted().map({$0.name}).joined(separator: ",")
         }
     }
     
     
     //MARK: - Inicializadores
-    init(title : String, authors : [Author], tags : [Tag], urlBookCover: URL, urlBookPDF : URL) {
+    init(title : String, authors : [Author], tags : Tags, urlBookCover: Image, urlBookPDF : Pdf) {
         self.title = title
         self.authors = authors
         self.tags = tags
@@ -51,8 +54,9 @@ class Book {
         return "\(title)\(authorsName)\(tagsName)\(urlBookCover)\(urlBookPDF)"
     }
     
-    
-    
+    func proxyForHashable() -> String {
+        return "\(title)\(authorsName)"
+    }
     
 }
 
@@ -82,6 +86,17 @@ extension Book : CustomStringConvertible{
     public var description: String {
         get{
             return "\(type(of:self)) - \(title) -- Authors: \(authorsName)"
+        }
+    }
+    
+}
+
+// Para el MapDictionary
+extension Book : Hashable{
+
+    public var hashValue: Int {
+        get{
+            return proxyForEquality().hashValue
         }
     }
     
