@@ -65,6 +65,17 @@ struct MultiDictionary<Key : Hashable, Value : Hashable>{
     }
     
     
+    public
+    var keys : LazyMapCollection<Dictionary<Key, Bucket>,Key> {
+        return _dict.keys
+    }
+    
+    public
+    var buckets : LazyMapCollection<Dictionary<Key, Bucket>,Bucket> {
+        return _dict.values
+    }
+
+    
     //MARK: - Setters (Mutators)
     
     public
