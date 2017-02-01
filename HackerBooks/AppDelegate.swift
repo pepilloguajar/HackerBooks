@@ -15,6 +15,50 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        
+        // Crear una instancia del modelo -- lanza errores por lo que tenemos que poner un do-catch
+        do{
+            // Array de diccionares de JSON
+            let json = try loadFromLocalFile(fileName: "books_readable.json")
+            
+            // Crear un array de clases de Swift
+            var books = [Book]()
+            for dict in json{
+                do{
+                    let char = try decode(book: dict)
+                    books.append(char)
+                }catch{
+                    print("Error al procesar \(dict)")
+                }
+                
+            }
+            
+            var lib = Library(books: books)
+            
+            let tag1 = Tag(name: "programming")
+            
+            let countTag1 = lib.bookCount(forTagName: tag1)
+            guard var books1 = lib.books(forTagName: tag1) else{
+                return false
+            }
+            let tagsList = lib.tags
+            let tagsCount = lib.tagCount
+            
+            guard var abook = lib.book(fotTagName: tag1, at: 1) else{
+                return false
+            }
+            
+
+            
+            return true
+        }catch{
+            fatalError("Error while loading Model from JSON")
+        }
+
+        
+        
         // Override point for customization after application launch.
         return true
     }

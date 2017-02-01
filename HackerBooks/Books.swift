@@ -27,7 +27,7 @@ class Book {
     //MARK: - computed properties
     var authorsName : String {
         get{
-            return authors.sorted().joined(separator: ",")
+            return authors.sorted().joined(separator: ", ")
         }
     }
     

@@ -10,6 +10,10 @@
 		929BF16A1E40BD8200698665 /* Tags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929BF1691E40BD8200698665 /* Tags.swift */; };
 		929BF16C1E40ED2B00698665 /* MultiDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929BF16B1E40ED2B00698665 /* MultiDictionary.swift */; };
 		929BF16E1E40F63000698665 /* books_readable.json in Resources */ = {isa = PBXBuildFile; fileRef = 929BF16D1E40F63000698665 /* books_readable.json */; };
+		929BF1701E40F69000698665 /* JSONProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929BF16F1E40F69000698665 /* JSONProcessing.swift */; };
+		929BF1721E40F92200698665 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929BF1711E40F92200698665 /* Errors.swift */; };
+		929BF1741E42730C00698665 /* FoundationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929BF1731E42730C00698665 /* FoundationExtension.swift */; };
+		929BF1761E427F5700698665 /* Library.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929BF1751E427F5700698665 /* Library.swift */; };
 		92C0C6D71E34D0AB00AD86C7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C0C6D61E34D0AB00AD86C7 /* AppDelegate.swift */; };
 		92C0C6D91E34D0AB00AD86C7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C0C6D81E34D0AB00AD86C7 /* ViewController.swift */; };
 		92C0C6DC1E34D0AB00AD86C7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92C0C6DA1E34D0AB00AD86C7 /* Main.storyboard */; };
@@ -22,6 +26,10 @@
 		929BF1691E40BD8200698665 /* Tags.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tags.swift; sourceTree = "<group>"; };
 		929BF16B1E40ED2B00698665 /* MultiDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiDictionary.swift; sourceTree = "<group>"; };
 		929BF16D1E40F63000698665 /* books_readable.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = books_readable.json; sourceTree = "<group>"; };
+		929BF16F1E40F69000698665 /* JSONProcessing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONProcessing.swift; sourceTree = "<group>"; };
+		929BF1711E40F92200698665 /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		929BF1731E42730C00698665 /* FoundationExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoundationExtension.swift; sourceTree = "<group>"; };
+		929BF1751E427F5700698665 /* Library.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Library.swift; sourceTree = "<group>"; };
 		92C0C6D31E34D0AB00AD86C7 /* HackerBooks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HackerBooks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92C0C6D61E34D0AB00AD86C7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		92C0C6D81E34D0AB00AD86C7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -89,6 +97,9 @@
 				92C0C6EE1E34D33B00AD86C7 /* Books.swift */,
 				929BF1691E40BD8200698665 /* Tags.swift */,
 				929BF16B1E40ED2B00698665 /* MultiDictionary.swift */,
+				929BF16F1E40F69000698665 /* JSONProcessing.swift */,
+				929BF1711E40F92200698665 /* Errors.swift */,
+				929BF1751E427F5700698665 /* Library.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -104,6 +115,7 @@
 		92C0C6EB1E34D28B00AD86C7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				929BF1731E42730C00698665 /* FoundationExtension.swift */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -181,11 +193,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				929BF1741E42730C00698665 /* FoundationExtension.swift in Sources */,
+				929BF1701E40F69000698665 /* JSONProcessing.swift in Sources */,
 				929BF16C1E40ED2B00698665 /* MultiDictionary.swift in Sources */,
 				929BF16A1E40BD8200698665 /* Tags.swift in Sources */,
 				92C0C6EF1E34D33B00AD86C7 /* Books.swift in Sources */,
 				92C0C6D91E34D0AB00AD86C7 /* ViewController.swift in Sources */,
 				92C0C6D71E34D0AB00AD86C7 /* AppDelegate.swift in Sources */,
+				929BF1721E40F92200698665 /* Errors.swift in Sources */,
+				929BF1761E427F5700698665 /* Library.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

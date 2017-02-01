@@ -7,3 +7,10 @@
 //
 
 import Foundation
+
+enum HackerBooksError : Error {
+    case jsonParsingError
+    case wrongJSONFormat
+    case nilJSONObject
+    
+}
