@@ -35,24 +35,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
             }
             
-            var lib = Library(books: books)
+            let model = Library(books: books)
             
-            let tag1 = Tag(name: "programming")
+            // Creamos VC
+            let lVC = LibraryTableViewController(model: model)
             
-            let countTag1 = lib.bookCount(forTagName: tag1)
-            guard var books1 = lib.books(forTagName: tag1) else{
-                return false
-            }
-            let tagsList = lib.tags
-            let tagsCount = lib.tagCount
+            // Creamos el navigation controller
+            let lNav = UINavigationController(rootViewController: lVC)
             
-            guard var abook = lib.book(fotTagName: tag1, at: 1) else{
-                return false
-            }
+            // Lo añadimos a la window
+            window?.rootViewController = lNav
             
+            // Mostramos la window
+            window?.makeKeyAndVisible()
 
-            
             return true
+            
         }catch{
             fatalError("Error while loading Model from JSON")
         }
