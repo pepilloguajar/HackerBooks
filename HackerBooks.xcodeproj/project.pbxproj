@@ -19,6 +19,9 @@
 		929BF17D1E42B04A00698665 /* bookDefault.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 929BF17C1E42B04A00698665 /* bookDefault.jpg */; };
 		929BF1801E44F50600698665 /* BookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929BF17E1E44F50600698665 /* BookViewController.swift */; };
 		929BF1811E44F50600698665 /* BookViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 929BF17F1E44F50600698665 /* BookViewController.xib */; };
+		929BF1841E451C5B00698665 /* PDFReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929BF1821E451C5B00698665 /* PDFReaderViewController.swift */; };
+		929BF1851E451C5B00698665 /* PDFReaderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 929BF1831E451C5B00698665 /* PDFReaderViewController.xib */; };
+		929BF1871E451FB400698665 /* pdfDefault.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 929BF1861E451FB400698665 /* pdfDefault.pdf */; };
 		92C0C6D71E34D0AB00AD86C7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C0C6D61E34D0AB00AD86C7 /* AppDelegate.swift */; };
 		92C0C6D91E34D0AB00AD86C7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C0C6D81E34D0AB00AD86C7 /* ViewController.swift */; };
 		92C0C6DC1E34D0AB00AD86C7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92C0C6DA1E34D0AB00AD86C7 /* Main.storyboard */; };
@@ -40,6 +43,9 @@
 		929BF17C1E42B04A00698665 /* bookDefault.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bookDefault.jpg; sourceTree = "<group>"; };
 		929BF17E1E44F50600698665 /* BookViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookViewController.swift; sourceTree = "<group>"; };
 		929BF17F1E44F50600698665 /* BookViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookViewController.xib; sourceTree = "<group>"; };
+		929BF1821E451C5B00698665 /* PDFReaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFReaderViewController.swift; sourceTree = "<group>"; };
+		929BF1831E451C5B00698665 /* PDFReaderViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PDFReaderViewController.xib; sourceTree = "<group>"; };
+		929BF1861E451FB400698665 /* pdfDefault.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = pdfDefault.pdf; sourceTree = "<group>"; };
 		92C0C6D31E34D0AB00AD86C7 /* HackerBooks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HackerBooks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92C0C6D61E34D0AB00AD86C7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		92C0C6D81E34D0AB00AD86C7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -68,6 +74,8 @@
 				929BF1791E42A97C00698665 /* LibraryTableViewController.xib */,
 				929BF17E1E44F50600698665 /* BookViewController.swift */,
 				929BF17F1E44F50600698665 /* BookViewController.xib */,
+				929BF1821E451C5B00698665 /* PDFReaderViewController.swift */,
+				929BF1831E451C5B00698665 /* PDFReaderViewController.xib */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -130,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				929BF17C1E42B04A00698665 /* bookDefault.jpg */,
+				929BF1861E451FB400698665 /* pdfDefault.pdf */,
 				929BF16D1E40F63000698665 /* books_readable.json */,
 			);
 			name = Resources;
@@ -202,12 +211,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				929BF1851E451C5B00698665 /* PDFReaderViewController.xib in Resources */,
 				929BF16E1E40F63000698665 /* books_readable.json in Resources */,
 				92C0C6E11E34D0AB00AD86C7 /* LaunchScreen.storyboard in Resources */,
 				929BF1811E44F50600698665 /* BookViewController.xib in Resources */,
 				929BF17B1E42A97C00698665 /* LibraryTableViewController.xib in Resources */,
 				92C0C6DE1E34D0AB00AD86C7 /* Assets.xcassets in Resources */,
 				929BF17D1E42B04A00698665 /* bookDefault.jpg in Resources */,
+				929BF1871E451FB400698665 /* pdfDefault.pdf in Resources */,
 				92C0C6DC1E34D0AB00AD86C7 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -219,6 +230,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				929BF1841E451C5B00698665 /* PDFReaderViewController.swift in Sources */,
 				929BF1741E42730C00698665 /* FoundationExtension.swift in Sources */,
 				929BF1701E40F69000698665 /* JSONProcessing.swift in Sources */,
 				929BF16C1E40ED2B00698665 /* MultiDictionary.swift in Sources */,

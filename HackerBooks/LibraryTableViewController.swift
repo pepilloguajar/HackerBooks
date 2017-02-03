@@ -29,6 +29,7 @@ class LibraryTableViewController: UITableViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Library"
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false

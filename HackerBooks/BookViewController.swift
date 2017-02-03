@@ -67,6 +67,10 @@ class BookViewController: UIViewController {
     }
     
     @IBAction func readPdf(_ sender: UIBarButtonItem) {
-        print("BTN ver PDF pulsado")
+        
+        let pdfVC = PDFReaderViewController(model: model)
+        
+        self.navigationController?.pushViewController(pdfVC, animated: true)
+        
     }
 }
