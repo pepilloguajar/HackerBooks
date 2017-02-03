@@ -73,10 +73,33 @@ class LibraryTableViewController: UITableViewController {
         }
         
         cell?.imageView?.image = UIImage(named: "bookDefault.jpg")
+        
+        DispatchQueue.global().async {
+            let data = try? Data(contentsOf: (book?.urlBookCover)! )
+            DispatchQueue.main.async {
+                if let img = UIImage(data: data!){
+                    cell?.imageView?.image = img
+                }
+            }
+        }
+        
         cell?.textLabel?.text = book?.title
         cell?.detailTextLabel?.text = book?.authorsName
         
         return cell!
+        
+    }
+    
+    
+    // Al seleccionar un elemento de la tabla
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let tag = tagForSection(section: indexPath.section)
+        let book = model.book(fotTagName: tag, at: indexPath.row)
+        
+        let bookVC = BookViewController(model: book!)
+        
+        self.navigationController?.pushViewController(bookVC, animated: true)
         
     }
     
