@@ -13,6 +13,7 @@
             <connections>
                 <outlet property="authors" destination="q8w-rS-gI7" id="A3C-05-2bk"/>
                 <outlet property="coverBook" destination="uNG-Ud-89T" id="zIG-gs-mZn"/>
+                <outlet property="favoriteView" destination="OdY-eo-5RB" id="5vq-HI-TSo"/>
                 <outlet property="tags" destination="7Mv-1T-cE6" id="EkO-BS-8DK"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>

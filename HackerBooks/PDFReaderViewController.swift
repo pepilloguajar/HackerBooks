@@ -11,7 +11,7 @@ import UIKit
 class PDFReaderViewController: UIViewController {
 
     //MARK: - Properties
-    let model : Book
+    var model : Book
     
     @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var loaderIndicator: UIActivityIndicatorView!
@@ -34,7 +34,17 @@ class PDFReaderViewController: UIViewController {
         
         syncViewWithModel(book: model)
         self.edgesForExtendedLayout = []
+        
+        // alta en la notificación
+        subscribe()
+        
 
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // baja en la notificacion
+        unsubscribe()
     }
     
     
@@ -68,3 +78,53 @@ class PDFReaderViewController: UIViewController {
     
 
 }
+
+
+
+
+//MARK: - Notifications
+extension PDFReaderViewController{
+    
+    func subscribe(){
+        
+        let nc = NotificationCenter.default
+        
+        nc.addObserver(forName: LibraryTableViewController.notificationName, object: nil,
+                       queue: OperationQueue.main) { (note :Notification) in
+                        
+                        let aBook = note.userInfo?[LibraryTableViewController.bookKey] as! Book
+                        //cambio el modelo
+                        self.model = aBook
+                        
+                        //actulizo las vistas
+                        self.syncViewWithModel(book: aBook)
+        }
+        
+    }
+    
+    func unsubscribe(){
+        
+        let nc = NotificationCenter.default
+        nc.removeObserver(self)
+        
+    }
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

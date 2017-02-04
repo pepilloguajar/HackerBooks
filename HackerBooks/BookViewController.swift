@@ -12,11 +12,12 @@ class BookViewController: UIViewController {
 
 
     //MARK: - Properties
-    let model : Book
+    var model : Book
     
     @IBOutlet weak var coverBook: UIImageView!
     @IBOutlet weak var authors: UILabel!
     @IBOutlet weak var tags: UILabel!
+    @IBOutlet weak var favoriteView: UIBarButtonItem!
     
     //MARK: - Init
     init(model: Book){
@@ -64,6 +65,12 @@ class BookViewController: UIViewController {
     
     @IBAction func isFavorite(_ sender: UIBarButtonItem) {
         print("BTN Favorite pulsado")
+        if favoriteView.title == "♡" {
+            favoriteView.title = "♥"
+        }else{
+            favoriteView.title = "♡"
+        }
+            
     }
     
     @IBAction func readPdf(_ sender: UIBarButtonItem) {
@@ -74,3 +81,26 @@ class BookViewController: UIViewController {
         
     }
 }
+
+
+
+//MARK: - Protocolos
+extension BookViewController : LibraryTableViewControllerDelegate{
+    
+    func libraryTableViewController(_ lCV: LibraryTableViewController, didSelectBook book: Book ){
+        self.model = book
+        syncViewWithModel(book: book)
+    }
+    
+}
+
+
+
+
+
+
+
+
+
+
+

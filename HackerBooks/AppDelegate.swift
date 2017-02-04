@@ -43,8 +43,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // Creamos el navigation controller
             let lNav = UINavigationController(rootViewController: lVC)
             
+            let aBook = model.book(fotTagName: model.tags[0], at: 0)
+            let bookVC = BookViewController(model: aBook!)
+            
+            let bookNav = UINavigationController(rootViewController: bookVC)
+            
+            let splitVC = UISplitViewController()
+            splitVC.viewControllers = [lNav,bookNav]
+            
+            //Asigno delegados
+            lVC.delegate = bookVC
+            
             // Lo añadimos a la window
-            window?.rootViewController = lNav
+            window?.rootViewController = splitVC
             
             // Mostramos la window
             window?.makeKeyAndVisible()

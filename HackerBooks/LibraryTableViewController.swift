@@ -10,10 +10,16 @@ import UIKit
 
 class LibraryTableViewController: UITableViewController {
     
+    //MARK: - Constants
+    static let notificationName = Notification.Name(rawValue: "BookDidChange")
+    static let bookKey = "BookKey"
+    
+        
     //MARK: - Properties
     let model : Library
     
-    
+    // property delegate
+    weak var delegate : LibraryTableViewControllerDelegate?
 
     
     //MARK: - Init
@@ -31,11 +37,6 @@ class LibraryTableViewController: UITableViewController {
         super.viewDidLoad()
         title = "Library"
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
 
@@ -91,16 +92,23 @@ class LibraryTableViewController: UITableViewController {
         
     }
     
-    
+    //MARK: - TableView Dalegate
     // Al seleccionar un elemento de la tabla
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let tag = tagForSection(section: indexPath.section)
         let book = model.book(fotTagName: tag, at: indexPath.row)
         
-        let bookVC = BookViewController(model: book!)
+        //        let bookVC = BookViewController(model: book!)
         
-        self.navigationController?.pushViewController(bookVC, animated: true)
+        //        self.navigationController?.pushViewController(bookVC, animated: true)
+        
+        
+        // Avisamos al delegado
+        delegate?.libraryTableViewController(self, didSelectBook: book!)
+       
+        //Enviamos Notificacion 
+        notify(bookChanged: book!)
         
     }
     
@@ -111,6 +119,47 @@ class LibraryTableViewController: UITableViewController {
     }
     
     
-    
 
 }
+
+
+//MARK: - Protocolo
+protocol LibraryTableViewControllerDelegate : class {
+    
+    func libraryTableViewController(_ lCV: LibraryTableViewController, didSelectBook book: Book )
+    
+    
+}
+
+
+//MARK: - Notifications
+extension LibraryTableViewController{
+    
+    func notify(bookChanged book : Book){
+        
+        let nc = NotificationCenter.default
+        
+        let noti = Notification(name: LibraryTableViewController.notificationName, object: self, userInfo: [LibraryTableViewController.bookKey : book])
+        
+        nc.post(noti)
+    }
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -33,7 +33,7 @@ class Book {
     
     var tagsName : String {
         get{
-            return tags.sorted().map({$0.name}).joined(separator: ",")
+            return tags.sorted().map({$0.name}).joined(separator: ", ")
         }
     }
     

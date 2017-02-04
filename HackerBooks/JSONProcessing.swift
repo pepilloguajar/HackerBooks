@@ -72,7 +72,7 @@ func loadFromLocalFile(fileName name : String, bundle: Bundle = Bundle.main) thr
 //MARK: Utils
 //Parseo de autores y tags
 func parseStringToArray(string : String) -> [String]{
-    return string.components(separatedBy: ",").map({$0.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)})
+    return string.components(separatedBy: ",").map({$0.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).capitalized})
 }
 
 
