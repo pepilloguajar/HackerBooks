@@ -9,7 +9,10 @@
 import UIKit
 
 class BookViewController: UIViewController {
-
+    
+    //MARK: - Constants
+    static var notiFavoriteBook = Notification.Name(rawValue: "NotiBookFavorite")
+    static var notiBookKey = "notiBookKey"
 
     //MARK: - Properties
     var model : Book
@@ -60,15 +63,28 @@ class BookViewController: UIViewController {
         tags.text = book.tagsName
         title = book.title
         
+        if model.containsFavoriteTag(){
+            favoriteView.title = "♥"
+        }else{
+            favoriteView.title = "♡"
+        }
+        
     }
     
     
     @IBAction func isFavorite(_ sender: UIBarButtonItem) {
-        print("BTN Favorite pulsado")
-        if favoriteView.title == "♡" {
-            favoriteView.title = "♥"
+
+        if !model.containsFavoriteTag() {
+            
+            model.addTagFavorite()
+            syncViewWithModel(book: model)
+            notifyFavorite()
+            
         }else{
-            favoriteView.title = "♡"
+            
+            model.removeTagFavorite()
+            syncViewWithModel(book: model)
+            notifyFavorite()
         }
             
     }
@@ -91,6 +107,23 @@ extension BookViewController : LibraryTableViewControllerDelegate{
         self.model = book
         syncViewWithModel(book: book)
     }
+    
+}
+
+
+//MARK: - Notifications
+extension BookViewController{
+    
+    func notifyFavorite(){
+        
+        let nc = NotificationCenter.default
+        
+        let noti = Notification(name: BookViewController.notiFavoriteBook, object: self, userInfo: [BookViewController.notiBookKey : model])
+        
+        nc.post(noti)
+    }
+    
+
     
 }
 

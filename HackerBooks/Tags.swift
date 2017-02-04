@@ -16,6 +16,9 @@ struct Tag {
         self.name = name
     }
     
+    //Constants
+    static let favoriteTag = Tag(name: "Favorite")
+    
 }
 
 
@@ -35,9 +38,9 @@ extension Tag : Comparable{
     
     public static func <(lhs: Tag, rhs: Tag) -> Bool{
         
-        if (lhs.name == "Favorite"){
+        if (lhs.name == favoriteTag.name){
             return true
-        }else if (rhs.name == "Favorite"){
+        }else if (rhs.name == favoriteTag.name){
             return false
         }else{
             return (lhs.name < rhs.name)

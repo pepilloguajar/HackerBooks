@@ -20,7 +20,7 @@ class Book {
     //MARK: - Stored properties
     let title : String
     let authors : Authors
-    let tags : Tags
+    var tags : Tags
     let urlBookCover : Image
     let urlBookPDF : Pdf
 
@@ -48,10 +48,23 @@ class Book {
       
     }
     
+    //Favorite function
+    func addTagFavorite() {
+        tags.insert(Tag.favoriteTag)
+    }
+    
+    func removeTagFavorite() {
+        tags.remove(Tag.favoriteTag)
+    }
+    
+    func containsFavoriteTag() -> Bool {
+        return tags.contains(Tag.favoriteTag)
+    }
+    
     
     //MARK: - Proxies
     func proxyForEquality() -> String {
-        return "\(title)\(authorsName)\(tagsName)\(urlBookCover)\(urlBookPDF)"
+        return "\(title)\(authorsName)\(urlBookCover)\(urlBookPDF)"
     }
     
     func proxyForHashable() -> String {

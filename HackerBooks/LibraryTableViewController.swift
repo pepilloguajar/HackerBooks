@@ -16,7 +16,7 @@ class LibraryTableViewController: UITableViewController {
     
         
     //MARK: - Properties
-    let model : Library
+    var model : Library
     
     // property delegate
     weak var delegate : LibraryTableViewControllerDelegate?
@@ -36,8 +36,15 @@ class LibraryTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Library"
+        subscribe()
 
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        unsubscribe()
+    }
+    
 
 
 
@@ -142,6 +149,30 @@ extension LibraryTableViewController{
         let noti = Notification(name: LibraryTableViewController.notificationName, object: self, userInfo: [LibraryTableViewController.bookKey : book])
         
         nc.post(noti)
+    }
+    
+    
+    
+    func subscribe() {
+        
+        let nc = NotificationCenter.default
+        nc.addObserver(forName: BookViewController.notiFavoriteBook, object: nil, queue: OperationQueue.main) { (noti : Notification) in
+            let aBook = noti.userInfo?[BookViewController.notiBookKey] as! Book
+            
+            if aBook.containsFavoriteTag(){
+                self.model.books.insert(value: aBook, forKey: Tag.favoriteTag)
+            }else{
+                self.model.books.remove(value: aBook, fromKey: Tag.favoriteTag)
+            }
+            self.tableView.reloadData()
+            
+        }
+        
+    }
+    
+    func unsubscribe() {
+        let nc = NotificationCenter.default
+        nc.removeObserver(self)
     }
     
 }
