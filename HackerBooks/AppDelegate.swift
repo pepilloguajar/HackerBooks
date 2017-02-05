@@ -30,13 +30,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             let arrayFavorites = userData.array(forKey: Constants.keyFavoriteForUserDefaults) as! [Int]
 
-            //dictUrlCoverBook
-            if (userData.dictionary(forKey: Constants.keyDictUrlCoverBook) == nil){
-                userData.setValue(["":""], forKeyPath: Constants.keyDictUrlCoverBook)
-            }
-            
-            let dictImg = userData.dictionary(forKey: Constants.keyDictUrlCoverBook)
-
             
             // Array de diccionares de JSON
             let json = try loadFromLocalFile(fileName: "books_readable.json")

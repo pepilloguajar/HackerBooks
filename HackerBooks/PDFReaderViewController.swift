@@ -9,7 +9,7 @@
 import UIKit
 
 class PDFReaderViewController: UIViewController {
-
+    
     //MARK: - Properties
     var model : Book
     
@@ -38,7 +38,7 @@ class PDFReaderViewController: UIViewController {
         // alta en la notificación
         subscribe()
         
-
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -52,31 +52,37 @@ class PDFReaderViewController: UIViewController {
     //MARK: - Async
     func syncViewWithModel(book : Book) {
         
-        loaderIndicator.isHidden = false
-        loaderIndicator.startAnimating()
         
-        let pdf = Bundle.main.url(forResource: "pdfDefault", withExtension: "pdf")
-        let pdfData = try? Data(contentsOf: pdf!)
-        
-        webView.load(pdfData!, mimeType: "application/pdf", textEncodingName: "utf8", baseURL: book.urlBookPDF)
-        
-        // para no bloquear UI
-        DispatchQueue.global().async {
-            let data = try? Data(contentsOf: book.urlBookPDF )
-            DispatchQueue.main.async {
-                if data != nil{
-                    self.webView.load(data!, mimeType: "application/pdf", textEncodingName: "utf8", baseURL: book.urlBookPDF)
-                    self.loaderIndicator.isHidden = true
-                    self.loaderIndicator.stopAnimating()
+        if let dataPdf = loadFile(fileName: String(book.urlBookPDF.hashValue)){
+            webView.load(dataPdf, mimeType: "application/pdf", textEncodingName: "utf8", baseURL: book.urlBookPDF)
+        }else{
+            
+            loaderIndicator.isHidden = false
+            loaderIndicator.startAnimating()
+            
+            let pdf = Bundle.main.url(forResource: "pdfDefault", withExtension: "pdf")
+            let pdfData = try? Data(contentsOf: pdf!)
+            
+            webView.load(pdfData!, mimeType: "application/pdf", textEncodingName: "utf8", baseURL: book.urlBookPDF)
+            
+            // para no bloquear UI
+            DispatchQueue.global().async {
+                let data = try? Data(contentsOf: book.urlBookPDF )
+                DispatchQueue.main.async {
+                    if data != nil{
+                        self.webView.load(data!, mimeType: "application/pdf", textEncodingName: "utf8", baseURL: book.urlBookPDF)
+                        self.loaderIndicator.isHidden = true
+                        self.loaderIndicator.stopAnimating()
+                        saveFile(data: data!, withName: String(book.urlBookPDF.hashValue))
+                    }
                 }
             }
         }
-    
-    
+        
     }
     
     
-
+    
 }
 
 
