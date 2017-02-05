@@ -49,14 +49,20 @@ class BookViewController: UIViewController {
 
         coverBook.image = UIImage(named: "bookDefault.jpg")
         
-        // para no bloquear UI
-        DispatchQueue.global().async {
-            let data = try? Data(contentsOf: book.urlBookCover )
-            DispatchQueue.main.async {
-                if let img = UIImage(data: data!){
-                    self.coverBook.image = img
+        if book.urlCoverLocal == nil{
+            
+            // para no bloquear UI
+            DispatchQueue.global().async {
+                let data = try? Data(contentsOf: book.urlBookCover )
+                DispatchQueue.main.async {
+                    if let img = UIImage(data: data!){
+                        self.coverBook.image = img
+                    }
                 }
             }
+
+        }else{
+            coverBook.image = try! UIImage(data: Data(contentsOf: book.urlCoverLocal!))
         }
         
         authors.text = book.authorsName
@@ -96,6 +102,10 @@ class BookViewController: UIViewController {
         self.navigationController?.pushViewController(pdfVC, animated: true)
         
     }
+    
+
+    
+    
 }
 
 

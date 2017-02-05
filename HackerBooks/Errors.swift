@@ -12,5 +12,6 @@ enum HackerBooksError : Error {
     case jsonParsingError
     case wrongJSONFormat
     case nilJSONObject
+    case errorSaveImageCoverLocal
     
 }

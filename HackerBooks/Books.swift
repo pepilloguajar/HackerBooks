@@ -23,6 +23,9 @@ class Book {
     var tags : Tags
     let urlBookCover : Image
     let urlBookPDF : Pdf
+    
+    var urlCoverLocal :Image? = nil
+    
 
     //MARK: - computed properties
     var authorsName : String {

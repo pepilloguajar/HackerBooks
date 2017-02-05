@@ -83,14 +83,29 @@ class LibraryTableViewController: UITableViewController {
         
         cell?.imageView?.image = UIImage(named: "bookDefault.jpg")
         
-        DispatchQueue.global().async {
-            let data = try? Data(contentsOf: (book?.urlBookCover)! )
-            DispatchQueue.main.async {
-                if let img = UIImage(data: data!){
-                    cell?.imageView?.image = img
+        // Cargo las imágenes del libro 
+        // Si no están descargadas las descargo y guardo
+        // Si están descargadas las muestro
+        if book?.urlCoverLocal == nil{
+            
+            // para no bloquear UI
+            DispatchQueue.global().async {
+                let data = try? Data(contentsOf: (book?.urlBookCover)! )
+                DispatchQueue.main.async {
+                    if let img = UIImage(data: data!){
+                        cell?.imageView?.image = img
+                        //Lo guardo en local y guardo su URL
+                        if let urlCover = self.saveImgCover(book: book!, data : data!){
+                            book?.urlCoverLocal = urlCover
+                        }
+                        
+                    }
                 }
             }
+        }else{
+            cell?.imageView?.image = try! UIImage(data: Data(contentsOf: (book?.urlCoverLocal!)!))
         }
+
         
         cell?.textLabel?.text = book?.title
         cell?.detailTextLabel?.text = book?.authorsName
@@ -123,6 +138,18 @@ class LibraryTableViewController: UITableViewController {
     //MARK: - Utils
     func tagForSection(section: Int) -> Tag {
         return model.tags[section]
+    }
+    
+    
+    func saveImgCover(book: Book, data : Data) -> URL? {
+        let dir = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create:true)
+        let file = dir.appendingPathComponent(String(book.urlBookCover.hashValue))
+        
+        do{
+            try data.write(to: file)
+            return file
+        }
+        catch { return nil}
     }
     
     
