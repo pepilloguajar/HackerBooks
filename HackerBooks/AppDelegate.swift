@@ -12,21 +12,32 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-
+    
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         
         // Crear una instancia del modelo -- lanza errores por lo que tenemos que poner un do-catch
         do{
+            
+            //MARK: - UserDefaults
+            //Favorites data
             let userData = UserDefaults.standard
 
-            if (userData.array(forKey: "Favorite") == nil){
-                userData.setValue([], forKeyPath: "Favorite")
+            if (userData.array(forKey: Constants.keyFavoriteForUserDefaults) == nil){
+                userData.setValue([], forKeyPath: Constants.keyFavoriteForUserDefaults)
             }
-            let arrayFavorites = userData.array(forKey: "Favorite") as! [Int]
+            let arrayFavorites = userData.array(forKey: Constants.keyFavoriteForUserDefaults) as! [Int]
 
+            //dictUrlCoverBook
+            if (userData.dictionary(forKey: Constants.keyDictUrlCoverBook) == nil){
+                userData.setValue(["":""], forKeyPath: Constants.keyDictUrlCoverBook)
+            }
+            
+            let dictImg = userData.dictionary(forKey: Constants.keyDictUrlCoverBook)
+
+            
             // Array de diccionares de JSON
             let json = try loadFromLocalFile(fileName: "books_readable.json")
             

@@ -80,14 +80,17 @@ class LibraryTableViewController: UITableViewController {
             // El opcional está vacio y creamos la celda
             cell = UITableViewCell(style: .subtitle, reuseIdentifier: cellId)
         }
-        
+        cell?.textLabel?.text = book?.title
+        cell?.detailTextLabel?.text = book?.authorsName
         cell?.imageView?.image = UIImage(named: "bookDefault.jpg")
         
         // Cargo las imágenes del libro 
         // Si no están descargadas las descargo y guardo
         // Si están descargadas las muestro
-        if book?.urlCoverLocal == nil{
+        if let dataImg = loadFile(fileName: String(book!.urlBookCover.hashValue)){
+            cell?.imageView?.image = UIImage(data: dataImg)
             
+        }else{
             // para no bloquear UI
             DispatchQueue.global().async {
                 let data = try? Data(contentsOf: (book?.urlBookCover)! )
@@ -95,20 +98,12 @@ class LibraryTableViewController: UITableViewController {
                     if let img = UIImage(data: data!){
                         cell?.imageView?.image = img
                         //Lo guardo en local y guardo su URL
-                        if let urlCover = self.saveImgCover(book: book!, data : data!){
-                            book?.urlCoverLocal = urlCover
-                        }
-                        
+                        self.saveFile(data: data!, book: book!)
                     }
                 }
             }
-        }else{
-            cell?.imageView?.image = try! UIImage(data: Data(contentsOf: (book?.urlCoverLocal!)!))
         }
 
-        
-        cell?.textLabel?.text = book?.title
-        cell?.detailTextLabel?.text = book?.authorsName
         
         return cell!
         
@@ -140,17 +135,6 @@ class LibraryTableViewController: UITableViewController {
         return model.tags[section]
     }
     
-    
-    func saveImgCover(book: Book, data : Data) -> URL? {
-        let dir = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create:true)
-        let file = dir.appendingPathComponent(String(book.urlBookCover.hashValue))
-        
-        do{
-            try data.write(to: file)
-            return file
-        }
-        catch { return nil}
-    }
     
     
 
@@ -187,18 +171,18 @@ extension LibraryTableViewController{
             let aBook = noti.userInfo?[BookViewController.notiBookKey] as! Book
             
             let userData = UserDefaults.standard
-            guard var arrayFavorites = userData.array(forKey: "Favorite") as! [Int]? else{
+            guard var arrayFavorites = userData.array(forKey: Constants.keyFavoriteForUserDefaults) as! [Int]? else{
                 return
             }
             
             if aBook.containsFavoriteTag(){
                 self.model.books.insert(value: aBook, forKey: Tag.favoriteTag)
                 arrayFavorites.append(aBook.hashValue)
-                userData.setValue(arrayFavorites, forKeyPath: "Favorite")
+                userData.setValue(arrayFavorites, forKeyPath: Constants.keyFavoriteForUserDefaults)
             }else{
                 self.model.books.remove(value: aBook, fromKey: Tag.favoriteTag)
                 arrayFavorites = arrayFavorites.filter({ $0 != aBook.hashValue })
-                userData.setValue(arrayFavorites, forKeyPath: "Favorite")
+                userData.setValue(arrayFavorites, forKeyPath: Constants.keyFavoriteForUserDefaults)
             }
             self.tableView.reloadData()
             
@@ -215,8 +199,55 @@ extension LibraryTableViewController{
 
 
 
+//MARK: - Save/Load Files
+extension LibraryTableViewController{
+    
+    //MARK: - Save/Load File
+    
+     func getDocumentsURL() -> URL {
+        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        return documentsURL
+    }
+    
+     func fileInDocumentsDirectory(_ filename: String) -> String {
+        let fileURL = getDocumentsURL().appendingPathComponent(filename)
+        return fileURL.path
+    }
+    
 
+     func saveFile(data: Data, book: Book) {
+        let fileName:String = String(book.urlBookCover.hashValue)
+        let filePath = fileInDocumentsDirectory(fileName)
+        saveData(data, path: filePath)
+    }
+    
 
+     func loadFile(fileName: String) -> Data? {
+        
+        let filePath = fileInDocumentsDirectory(fileName)
+        if let loadedData = loadData(filePath) {
+            // Handle data however you wish
+            return loadedData
+        }
+        return nil
+        
+    }
+    
+     func saveData(_ data: Data, path: String ) {
+        
+        try? data.write(to: URL(fileURLWithPath: path), options: [.atomic])
+        
+    }
+    
+     func loadData(_ path: String) -> Data? {
+        
+        let data:Data? = try? Data(contentsOf: URL(fileURLWithPath: path))
+        
+        return data
+        
+    }
+
+}
 
 
 

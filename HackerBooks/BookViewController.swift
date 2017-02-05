@@ -35,8 +35,10 @@ class BookViewController: UIViewController {
     }
     
     //MARK: - LifeCycle
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         syncViewWithModel(book: model)
         self.edgesForExtendedLayout = []
     }
@@ -49,8 +51,9 @@ class BookViewController: UIViewController {
 
         coverBook.image = UIImage(named: "bookDefault.jpg")
         
-        if book.urlCoverLocal == nil{
-            
+        if let dataImg = loadFile(fileName: String(book.urlBookCover.hashValue)) {
+           coverBook.image = UIImage(data: dataImg)
+        }else{
             // para no bloquear UI
             DispatchQueue.global().async {
                 let data = try? Data(contentsOf: book.urlBookCover )
@@ -61,8 +64,8 @@ class BookViewController: UIViewController {
                 }
             }
 
-        }else{
-            coverBook.image = try! UIImage(data: Data(contentsOf: book.urlCoverLocal!))
+
+            
         }
         
         authors.text = book.authorsName
@@ -133,7 +136,56 @@ extension BookViewController{
         nc.post(noti)
     }
     
+    
+}
 
+//MARK: - Save/Load Files
+extension BookViewController{
+    
+    //MARK: - Save/Load File
+    
+    func getDocumentsURL() -> URL {
+        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        return documentsURL
+    }
+    
+    func fileInDocumentsDirectory(_ filename: String) -> String {
+        let fileURL = getDocumentsURL().appendingPathComponent(filename)
+        return fileURL.path
+    }
+    
+    
+    func saveFile(data: Data, book: Book) {
+        let fileName:String = String(book.urlBookCover.hashValue)
+        let filePath = fileInDocumentsDirectory(fileName)
+        saveData(data, path: filePath)
+    }
+    
+    
+    func loadFile(fileName: String) -> Data? {
+        
+        let filePath = fileInDocumentsDirectory(fileName)
+        if let loadedData = loadData(filePath) {
+            // Handle data however you wish
+            return loadedData
+        }
+        return nil
+        
+    }
+    
+    func saveData(_ data: Data, path: String ) {
+        
+        try? data.write(to: URL(fileURLWithPath: path), options: [.atomic])
+        
+    }
+    
+    func loadData(_ path: String) -> Data? {
+        
+        let data:Data? = try? Data(contentsOf: URL(fileURLWithPath: path))
+        
+        return data
+        
+    }
     
 }
 
