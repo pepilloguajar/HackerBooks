@@ -20,6 +20,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Crear una instancia del modelo -- lanza errores por lo que tenemos que poner un do-catch
         do{
+            let userData = UserDefaults.standard
+
+            if (userData.array(forKey: "Favorite") == nil){
+                userData.setValue([], forKeyPath: "Favorite")
+            }
+            let arrayFavorites = userData.array(forKey: "Favorite") as! [Int]
+
             // Array de diccionares de JSON
             let json = try loadFromLocalFile(fileName: "books_readable.json")
             
@@ -27,15 +34,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             var books = [Book]()
             for dict in json{
                 do{
-                    let char = try decode(book: dict)
-                    books.append(char)
+                    let aBook = try decode(book: dict)
+                    if arrayFavorites.contains(aBook.hashValue){
+                        // Lo marcamos como favorito
+                        aBook.addTagFavorite()
+                    }
+                    books.append(aBook)
                 }catch{
                     print("Error al procesar \(dict)")
                 }
                 
             }
+            //userData.set(books, forKey: "Modelo")
+            //userData.setValue(books, forKey: "Model")
+           
             
             let model = Library(books: books)
+
             
             // Creamos VC
             let lVC = LibraryTableViewController(model: model)

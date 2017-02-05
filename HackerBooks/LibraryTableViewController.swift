@@ -186,10 +186,19 @@ extension LibraryTableViewController{
         nc.addObserver(forName: BookViewController.notiFavoriteBook, object: nil, queue: OperationQueue.main) { (noti : Notification) in
             let aBook = noti.userInfo?[BookViewController.notiBookKey] as! Book
             
+            let userData = UserDefaults.standard
+            guard var arrayFavorites = userData.array(forKey: "Favorite") as! [Int]? else{
+                return
+            }
+            
             if aBook.containsFavoriteTag(){
                 self.model.books.insert(value: aBook, forKey: Tag.favoriteTag)
+                arrayFavorites.append(aBook.hashValue)
+                userData.setValue(arrayFavorites, forKeyPath: "Favorite")
             }else{
                 self.model.books.remove(value: aBook, fromKey: Tag.favoriteTag)
+                arrayFavorites = arrayFavorites.filter({ $0 != aBook.hashValue })
+                userData.setValue(arrayFavorites, forKeyPath: "Favorite")
             }
             self.tableView.reloadData()
             
