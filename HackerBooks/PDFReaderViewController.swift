@@ -60,20 +60,24 @@ class PDFReaderViewController: UIViewController {
             loaderIndicator.isHidden = false
             loaderIndicator.startAnimating()
             
-            let pdf = Bundle.main.url(forResource: "pdfDefault", withExtension: "pdf")
-            let pdfData = try? Data(contentsOf: pdf!)
+            guard let pdf = Bundle.main.url(forResource: "pdfDefault", withExtension: "pdf"), let pdfData = try? Data(contentsOf: pdf) else {
+                return
+            }
             
-            webView.load(pdfData!, mimeType: "application/pdf", textEncodingName: "utf8", baseURL: book.urlBookPDF)
+            webView.load(pdfData, mimeType: "application/pdf", textEncodingName: "utf8", baseURL: book.urlBookPDF)
             
             // para no bloquear UI
             DispatchQueue.global().async {
                 let data = try? Data(contentsOf: book.urlBookPDF )
                 DispatchQueue.main.async {
+                    guard let dataOk = data else{
+                        return
+                    }
                     if data != nil{
-                        self.webView.load(data!, mimeType: "application/pdf", textEncodingName: "utf8", baseURL: book.urlBookPDF)
+                        self.webView.load(dataOk, mimeType: "application/pdf", textEncodingName: "utf8", baseURL: book.urlBookPDF)
                         self.loaderIndicator.isHidden = true
                         self.loaderIndicator.stopAnimating()
-                        saveFile(data: data!, withName: String(book.urlBookPDF.hashValue))
+                        saveFile(data: dataOk, withName: String(book.urlBookPDF.hashValue))
                     }
                 }
             }

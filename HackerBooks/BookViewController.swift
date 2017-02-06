@@ -58,7 +58,10 @@ class BookViewController: UIViewController {
             DispatchQueue.global().async {
                 let data = try? Data(contentsOf: book.urlBookCover )
                 DispatchQueue.main.async {
-                    if let img = UIImage(data: data!){
+                    guard let dataOk = data else{
+                        return
+                    }
+                    if let img = UIImage(data: dataOk){
                         self.coverBook.image = img
                     }
                 }

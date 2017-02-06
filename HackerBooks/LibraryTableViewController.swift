@@ -72,7 +72,7 @@ class LibraryTableViewController: UITableViewController {
         
         let tag = tagForSection(section: indexPath.section)
         
-        let book = model.book(fotTagName: tag, at: indexPath.row)
+        
         
         var cell = tableView.dequeueReusableCell(withIdentifier: cellId)
         
@@ -80,25 +80,33 @@ class LibraryTableViewController: UITableViewController {
             // El opcional está vacio y creamos la celda
             cell = UITableViewCell(style: .subtitle, reuseIdentifier: cellId)
         }
-        cell?.textLabel?.text = book?.title
-        cell?.detailTextLabel?.text = book?.authorsName
+        
+        guard let book = model.book(fotTagName: tag, at: indexPath.row) else{
+            return cell!
+        }
+        
+        cell?.textLabel?.text = book.title
+        cell?.detailTextLabel?.text = book.authorsName
         cell?.imageView?.image = UIImage(named: "bookDefault.jpg")
         
         // Cargo las imágenes del libro 
         // Si no están descargadas las descargo y guardo
         // Si están descargadas las muestro
-        if let dataImg = loadFile(fileName: String(book!.urlBookCover.hashValue)){
+        if let dataImg = loadFile(fileName: String(book.urlBookCover.hashValue)){
             cell?.imageView?.image = UIImage(data: dataImg)
             
         }else{
             // para no bloquear UI
             DispatchQueue.global().async {
-                let data = try? Data(contentsOf: (book?.urlBookCover)! )
+                let data = try? Data(contentsOf: (book.urlBookCover) )
                 DispatchQueue.main.async {
-                    if let img = UIImage(data: data!){
+                    guard let dataOk = data else{
+                        return
+                    }
+                    if let img = UIImage(data: dataOk){
                         cell?.imageView?.image = img
                         //Lo guardo en local y guardo su URL
-                        saveFile(data: data!, withName: String(book!.urlBookCover.hashValue))
+                        saveFile(data: dataOk, withName: String(book.urlBookCover.hashValue))
                     }
                 }
             }
@@ -114,7 +122,9 @@ class LibraryTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let tag = tagForSection(section: indexPath.section)
-        let book = model.book(fotTagName: tag, at: indexPath.row)
+        guard let book = model.book(fotTagName: tag, at: indexPath.row) else{
+            return
+        }
         
         //        let bookVC = BookViewController(model: book!)
         
@@ -122,10 +132,10 @@ class LibraryTableViewController: UITableViewController {
         
         
         // Avisamos al delegado
-        delegate?.libraryTableViewController(self, didSelectBook: book!)
+        delegate?.libraryTableViewController(self, didSelectBook: book)
        
         //Enviamos Notificacion 
-        notify(bookChanged: book!)
+        notify(bookChanged: book)
         
     }
     
