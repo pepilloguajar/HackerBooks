@@ -25,17 +25,29 @@ typealias JSONArray = [JSONDictionary]
 //MARK: - Decodificacion
 func decode(book dict: JSONDictionary) throws -> Book {
     
-    let title = dict["title"]!
+    //let title = dict["title"]!
+    guard let title = dict["title"] else{
+        throw HackerBooksError.jsonParsingError
+    }
     
-    let authors = parseStringToArray(string: dict["authors"]!)
+    guard let authorsString = dict["authors"] else{
+        throw HackerBooksError.jsonParsingError
+    }
+    let authors = parseStringToArray(string: authorsString)
     
-    let tags = Tags(parseStringToArray(string: dict["tags"]!).map({Tag(name: $0)}))
+    guard let tagString = dict["tags"] else {
+        throw HackerBooksError.jsonParsingError
+    }
+    let tags = Tags(parseStringToArray(string: tagString).map({Tag(name: $0)}))
     
-    let imageUrlString = dict["image_url"]!
-    let imageURL = URL(string: imageUrlString)!
+    guard let imgUrlStr = dict["image_url"], let imageURL = URL(string: imgUrlStr) else {
+        throw HackerBooksError.jsonParsingError
+    }
+
+    guard let pdfUrlStr = dict["pdf_url"], let pdfUrl = URL(string: pdfUrlStr) else {
+        throw HackerBooksError.jsonParsingError
+    }
     
-    let pdfUrlString = dict["pdf_url"]!
-    let pdfUrl = URL(string: pdfUrlString)!
     
     return Book(title: title, authors: authors, tags: tags, urlBookCover: imageURL, urlBookPDF: pdfUrl)
     
