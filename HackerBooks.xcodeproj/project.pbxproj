@@ -23,7 +23,6 @@
 		929BF1851E451C5B00698665 /* PDFReaderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 929BF1831E451C5B00698665 /* PDFReaderViewController.xib */; };
 		929BF1871E451FB400698665 /* pdfDefault.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 929BF1861E451FB400698665 /* pdfDefault.pdf */; };
 		92C0C6D71E34D0AB00AD86C7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C0C6D61E34D0AB00AD86C7 /* AppDelegate.swift */; };
-		92C0C6D91E34D0AB00AD86C7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C0C6D81E34D0AB00AD86C7 /* ViewController.swift */; };
 		92C0C6DC1E34D0AB00AD86C7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92C0C6DA1E34D0AB00AD86C7 /* Main.storyboard */; };
 		92C0C6DE1E34D0AB00AD86C7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92C0C6DD1E34D0AB00AD86C7 /* Assets.xcassets */; };
 		92C0C6E11E34D0AB00AD86C7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92C0C6DF1E34D0AB00AD86C7 /* LaunchScreen.storyboard */; };
@@ -50,7 +49,6 @@
 		929BF1861E451FB400698665 /* pdfDefault.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = pdfDefault.pdf; sourceTree = "<group>"; };
 		92C0C6D31E34D0AB00AD86C7 /* HackerBooks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HackerBooks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92C0C6D61E34D0AB00AD86C7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		92C0C6D81E34D0AB00AD86C7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		92C0C6DB1E34D0AB00AD86C7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		92C0C6DD1E34D0AB00AD86C7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		92C0C6E01E34D0AB00AD86C7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -117,7 +115,6 @@
 				92C0C6EA1E34D27B00AD86C7 /* Resources */,
 				92C0C6E91E34D26B00AD86C7 /* Models */,
 				92C0C6D61E34D0AB00AD86C7 /* AppDelegate.swift */,
-				92C0C6D81E34D0AB00AD86C7 /* ViewController.swift */,
 				92C0C6DA1E34D0AB00AD86C7 /* Main.storyboard */,
 				92C0C6DD1E34D0AB00AD86C7 /* Assets.xcassets */,
 				92C0C6DF1E34D0AB00AD86C7 /* LaunchScreen.storyboard */,
@@ -254,7 +251,6 @@
 				929BF17A1E42A97C00698665 /* LibraryTableViewController.swift in Sources */,
 				92FFB39D1E47795C0068D0D0 /* Constants.swift in Sources */,
 				92C0C6EF1E34D33B00AD86C7 /* Books.swift in Sources */,
-				92C0C6D91E34D0AB00AD86C7 /* ViewController.swift in Sources */,
 				92C0C6D71E34D0AB00AD86C7 /* AppDelegate.swift in Sources */,
 				929BF1721E40F92200698665 /* Errors.swift in Sources */,
 				929BF1761E427F5700698665 /* Library.swift in Sources */,

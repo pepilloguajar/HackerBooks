@@ -208,6 +208,14 @@ extension LibraryTableViewController{
 }
 
 
+extension LibraryTableViewController: LibraryTableViewControllerDelegate{
+    
+    func libraryTableViewController(_ lCV: LibraryTableViewController, didSelectBook book: Book ){
+        let bookVC = BookViewController(model: book)
+        lCV.navigationController?.pushViewController(bookVC, animated: true)
+    }
+    
+}
 
 
 
