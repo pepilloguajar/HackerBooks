@@ -22,6 +22,8 @@ typealias JSONObject = String
 typealias JSONDictionary = [String : JSONObject]
 typealias JSONArray = [JSONDictionary]
 
+
+/*
 //MARK: - Decodificacion
 func decode(book dict: JSONDictionary) throws -> Book {
     
@@ -62,6 +64,7 @@ func decode(book dict: JSONDictionary?) throws -> Book  {
     
 }
 
+*/
 
 //MARK: - Loading
 func loadFromLocalFile(fileName name : String, bundle: Bundle = Bundle.main) throws -> JSONArray{

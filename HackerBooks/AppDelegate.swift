@@ -7,18 +7,27 @@
 //
 
 import UIKit
+import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
 
     var window: UIWindow?
     var lVC: LibraryTableViewController?
-    var bookVC: BookViewController?
+    //var bookVC: BookViewController?
+    var context: NSManagedObjectContext?
     
+        
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         window = UIWindow(frame: UIScreen.main.bounds)
+        
+        //Obtenemos el container y guardamos el contexto
+        let container = persistentContainer(dbName: "HackerBooks") { (error: NSError) in
+            fatalError("Unresolved error \(error), \(error.userInfo)")
+        }
+        self.context = container.viewContext
         
         // Crear una instancia del modelo -- lanza errores por lo que tenemos que poner un do-catch
         do{
@@ -30,12 +39,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             if (userData.array(forKey: Constants.keyFavoriteForUserDefaults) == nil){
                 userData.setValue([], forKeyPath: Constants.keyFavoriteForUserDefaults)
             }
-            let arrayFavorites = userData.array(forKey: Constants.keyFavoriteForUserDefaults) as! [Int]
+            //let arrayFavorites = userData.array(forKey: Constants.keyFavoriteForUserDefaults) as! [Int]
 
             
             // Array de diccionares de JSON
             let json = try loadFromLocalFile(fileName: "books_readable.json")
+            guard let context = self.context else { return true }
+            for abook in json{
+                Book.bookWithJSONDictionary(json: abook, context: context)
+                                
+            }
             
+            
+            let lVC = LibraryTableViewController()
+            lVC.context = context
+            
+            
+            saveContext(context: context)
+            
+            let nav = UINavigationController(rootViewController: lVC)
+            
+            // Lo añadimos a la window
+            window?.rootViewController = nav
+            
+            // Mostramos la window
+            window?.makeKeyAndVisible()
+            
+
+            return true
+            
+            
+            
+            
+            
+            
+            
+            
+            
+/*
             // Crear un array de clases de Swift
             var books = [Book]()
             for dict in json{
@@ -43,7 +84,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
                     let aBook = try decode(book: dict)
                     if arrayFavorites.contains(aBook.hashValue){
                         // Lo marcamos como favorito
-                        aBook.addTagFavorite()
+                        //aBook.addTagFavorite()
                     }
                     books.append(aBook)
                 }catch{
@@ -95,6 +136,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             window?.makeKeyAndVisible()
 
             return true
+ 
+ */
             
         }catch{
             fatalError("Error while loading Model from JSON")
@@ -105,10 +148,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         return true
     }
 
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        guard let context = self.context else{
+            return
+        }
+        saveContext(context: context)
+    }
+    
+    
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        guard let context = self.context else{
+            return
+        }
+        saveContext(context: context)
+    }
 
     
     // MARK: - Split View
-    
+  /*
     func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
         return true
     }
@@ -130,7 +188,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         return splitViewController.viewControllers.first
     }
     
-    
+    */
 
 }
 

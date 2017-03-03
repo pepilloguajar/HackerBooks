@@ -5,7 +5,7 @@
 //  Created by Jose Javier Montes Romero on 3/2/17.
 //  Copyright © 2017 Jose Javier Montes Romero. All rights reserved.
 //
-
+/*
 import UIKit
 
 class PDFReaderViewController: UIViewController {
@@ -121,7 +121,7 @@ extension PDFReaderViewController{
     
 }
 
-
+*/
 
 
 

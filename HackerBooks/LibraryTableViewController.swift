@@ -7,42 +7,50 @@
 //
 
 import UIKit
+import CoreData
 
 class LibraryTableViewController: UITableViewController {
+    
+    //Core Data
+    internal var _fetchedResultsController: NSFetchedResultsController<Book>? = nil
+    internal var context: NSManagedObjectContext?
+
+    
     
     //MARK: - Constants
     static let notificationName = Notification.Name(rawValue: "BookDidChange")
     static let bookKey = "BookKey"
     
+    
         
-    //MARK: - Properties
-    var model : Library
-    
-    // property delegate
-    weak var delegate : LibraryTableViewControllerDelegate?
-
-    
-    //MARK: - Init
-    init(model: Library){
-        self.model = model
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+//    //MARK: - Properties
+//    var model : Library
+//    
+//    // property delegate
+//    weak var delegate : LibraryTableViewControllerDelegate?
+//
+//    
+//    //MARK: - Init
+//    init(model: Library){
+//        self.model = model
+//        super.init(nibName: nil, bundle: nil)
+//    }
+//    
+//    required init?(coder aDecoder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
     
         
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Library"
-        subscribe()
+        //subscribe()
 
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        unsubscribe()
+        //unsubscribe()
     }
     
 
@@ -52,22 +60,42 @@ class LibraryTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return model.tagCount
+        return self.fetchedResultsController.sections?.count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return model.bookCount(forTagName: tagForSection(section: section))
+        return self.fetchedResultsController.sections![section].numberOfObjects
     }
 
 
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return tagForSection(section: section).name
+//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        return tagForSection(section: section).name
+//    }
+    
+    //Utils tabla
+    func configureCell(_ cell: UITableViewCell, withBook book: Book) {
+        cell.textLabel!.text = book.title
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         
+        let cellId = "BookCell"
+        
+        var cell = tableView.dequeueReusableCell(withIdentifier: cellId)
+        
+        if cell == nil{
+            // El opcional está vacio y creamos la celda
+            cell = UITableViewCell(style: .subtitle, reuseIdentifier: cellId)
+        }
+        guard let acell = cell else { return cell! }
+        //let cell = tableView.dequeueReusableCell(withIdentifier: "BookCell", for: indexPath)
+        let book = self.fetchedResultsController.object(at: indexPath)
+        self.configureCell(acell, withBook: book)
+        return acell
+        
+        
+        /*
         let cellId = "BookCell"
         
         let tag = tagForSection(section: indexPath.section)
@@ -114,36 +142,36 @@ class LibraryTableViewController: UITableViewController {
 
         
         return cell!
-        
+        */
     }
     
     //MARK: - TableView Dalegate
     // Al seleccionar un elemento de la tabla
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let tag = tagForSection(section: indexPath.section)
-        guard let book = model.book(fotTagName: tag, at: indexPath.row) else{
-            return
-        }
-        
-        //        let bookVC = BookViewController(model: book!)
-        
-        //        self.navigationController?.pushViewController(bookVC, animated: true)
-        
-        
-        // Avisamos al delegado
-        delegate?.libraryTableViewController(self, didSelectBook: book)
-       
-        //Enviamos Notificacion 
-        notify(bookChanged: book)
-        
-    }
+//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        
+//        let tag = tagForSection(section: indexPath.section)
+//        guard let book = model.book(fotTagName: tag, at: indexPath.row) else{
+//            return
+//        }
+//        
+//        //        let bookVC = BookViewController(model: book!)
+//        
+//        //        self.navigationController?.pushViewController(bookVC, animated: true)
+//        
+//        
+//        // Avisamos al delegado
+//        delegate?.libraryTableViewController(self, didSelectBook: book)
+//       
+//        //Enviamos Notificacion 
+//        notify(bookChanged: book)
+//        
+//    }
     
     
-    //MARK: - Utils
-    func tagForSection(section: Int) -> Tag {
-        return model.tags[section]
-    }
+//    //MARK: - Utils
+//    func tagForSection(section: Int) -> Tag {
+//        return model.tags[section]
+//    }
     
     
     
@@ -159,7 +187,8 @@ protocol LibraryTableViewControllerDelegate : class {
     
 }
 
-
+/*
+ 
 //MARK: - Notifications
 extension LibraryTableViewController{
     
@@ -219,7 +248,7 @@ extension LibraryTableViewController: LibraryTableViewControllerDelegate{
 
 
 
-
+*/
 
 
 
