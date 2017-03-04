@@ -42,24 +42,19 @@ extension Book{
         guard let pdfURLString = json["pdf_url"] else {return}
         
         let abook = unicObjectWithValue(title, forEntity: "Book", forKey: "title", context: context)
-        if let book = abook{
-            // El libro con ese título ya está creado y no lo creo. Habría que modificar esto por si cambian datos del libro (autores, tags, etc)
-
-        }else{
-            
+        if abook == nil{
             //No existe, lo creo
 
             let authorsArray = parseStringToArray(string: authorsString)
             let authorsObjcs = Author.arrayAuthorsWithArrayOfString(authors: authorsArray, context: context)
+            
             let tagsArray = parseStringToArray(string: tagsString)
             let tagsObjs = BookTag.arrayTagWithArrayOfStrings(arrayTagsString: tagsArray, context: context)
+            
             let cover = BookCoverPhoto.coverPhotoWithURL(url: imageURLString, context: context)
             let pdfObj = PDF.pdfWithURL(urlString: pdfURLString, context: context)
             
-            
-            let newBook = Book(title: title, authors: authorsObjcs, tags: tagsObjs, cover: cover, pdf: pdfObj, context: context)
-            print("\(newBook)")
-            
+            Book(title: title, authors: authorsObjcs, tags: tagsObjs, cover: cover, pdf: pdfObj, context: context)
 
         }
 

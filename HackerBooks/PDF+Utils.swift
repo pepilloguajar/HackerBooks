@@ -16,7 +16,12 @@ extension PDF{
     }
     
     class func pdfWithURL(urlString: String, context: NSManagedObjectContext) -> PDF{
-        return PDF(urlString: urlString, context: context)
+        let pdf = unicObjectWithValue(urlString, forEntity: "PDF", forKey: "urlString", context: context)
+        if pdf == nil{
+            return PDF(urlString: urlString, context: context)
+        }else{
+            return pdf as! PDF
+        }
     }
     
 }

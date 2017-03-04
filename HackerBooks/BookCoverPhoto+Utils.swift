@@ -16,7 +16,13 @@ extension BookCoverPhoto{
     }
     
     class func coverPhotoWithURL(url: String, context : NSManagedObjectContext) -> BookCoverPhoto{
-        return BookCoverPhoto(url: url, context: context)
+        let cover = unicObjectWithValue(url, forEntity: "BookCoverPhoto", forKey: "remoteURLString", context: context)
+        if cover == nil {
+            return BookCoverPhoto(url: url, context: context)
+        }else{
+            return cover as! BookCoverPhoto
+        }
+        
     }
     
 }
