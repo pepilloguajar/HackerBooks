@@ -5,10 +5,13 @@
 //  Created by Jose Javier Montes Romero on 3/2/17.
 //  Copyright © 2017 Jose Javier Montes Romero. All rights reserved.
 //
-/*
+
 import UIKit
+import CoreData
 
 class BookViewController: UIViewController {
+    //CoreData
+    let context: NSManagedObjectContext
     
     //MARK: - Constants
     static var notiFavoriteBook = Notification.Name(rawValue: "NotiBookFavorite")
@@ -23,8 +26,9 @@ class BookViewController: UIViewController {
     @IBOutlet weak var favoriteView: UIBarButtonItem!
     
     //MARK: - Init
-    init(model: Book){
+    init(model: Book, context: NSManagedObjectContext){
         self.model = model
+        self.context = context
         
         super.init(nibName: nil, bundle: nil)
         
@@ -51,12 +55,12 @@ class BookViewController: UIViewController {
 
         coverBook.image = UIImage(named: "bookDefault.jpg")
         
-        if let dataImg = loadFile(fileName: String(book.urlBookCover.hashValue)) {
-           coverBook.image = UIImage(data: dataImg)
+        if let dataImg = book.coverPhoto?.data {
+           coverBook.image = UIImage(data: dataImg as Data)
         }else{
             // para no bloquear UI
             DispatchQueue.global().async {
-                let data = try? Data(contentsOf: book.urlBookCover )
+                let data = try? Data(contentsOf: URL(string: (book.coverPhoto?.remoteURLString)!)! )
                 DispatchQueue.main.async {
                     guard let dataOk = data else{
                         return
@@ -71,21 +75,28 @@ class BookViewController: UIViewController {
             
         }
         
-        authors.text = book.authorsName
-        tags.text = book.tagsName
+        guard let authorsSet = book.authors else { return }
+        authors.text  = stringToNSSetAuthors(aSet: authorsSet)
+    
+        guard let tagsSet = book.tags else { return }
+        tags.text = stringToNSSetTags(aSet: tagsSet)
         title = book.title
         
+        /*
         if model.containsFavoriteTag(){
             favoriteView.title = "♥"
         }else{
             favoriteView.title = "♡"
         }
+ */
         
     }
     
-    
+
     @IBAction func isFavorite(_ sender: UIBarButtonItem) {
 
+        
+        /*
         if !model.containsFavoriteTag() {
             
             model.addTagFavorite()
@@ -98,23 +109,25 @@ class BookViewController: UIViewController {
             syncViewWithModel(book: model)
             notifyFavorite()
         }
-            
+        */
     }
-    
+
     @IBAction func readPdf(_ sender: UIBarButtonItem) {
         
         let pdfVC = PDFReaderViewController(model: model)
+        // inyecto el contexto por property para probar ambas formas
+        pdfVC.context = context
         
         self.navigationController?.pushViewController(pdfVC, animated: true)
-        
+
     }
-    
+
 
     
     
 }
 
-
+/*
 
 //MARK: - Protocolos
 extension BookViewController : LibraryTableViewControllerDelegate{

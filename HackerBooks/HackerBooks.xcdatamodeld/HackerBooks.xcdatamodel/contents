@@ -23,6 +23,11 @@
         <relationship name="coverPhoto" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="BookCoverPhoto" inverseName="book" inverseEntity="BookCoverPhoto" syncable="YES"/>
         <relationship name="pdf" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="PDF" inverseName="book" inverseEntity="PDF" syncable="YES"/>
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="BookTag" inverseName="books" inverseEntity="BookTag" syncable="YES"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="title"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
     <entity name="BookCoverPhoto" representedClassName="BookCoverPhoto" syncable="YES" codeGenerationType="class">
         <attribute name="data" optional="YES" attributeType="Binary" syncable="YES"/>

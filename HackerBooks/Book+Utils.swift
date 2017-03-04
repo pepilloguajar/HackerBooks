@@ -41,10 +41,13 @@ extension Book{
         guard let imageURLString = json["image_url"] else {return}
         guard let pdfURLString = json["pdf_url"] else {return}
         
-        
-        if !(unicObjectWithValue(title, forEntity: "Book", forKey: "title", context: context)){
-            //No existe, lo creo
+        let abook = unicObjectWithValue(title, forEntity: "Book", forKey: "title", context: context)
+        if let book = abook{
+            // El libro con ese título ya está creado y no lo creo. Habría que modificar esto por si cambian datos del libro (autores, tags, etc)
 
+        }else{
+            
+            //No existe, lo creo
 
             let authorsArray = parseStringToArray(string: authorsString)
             let authorsObjcs = Author.arrayAuthorsWithArrayOfString(authors: authorsArray, context: context)
@@ -57,8 +60,7 @@ extension Book{
             let newBook = Book(title: title, authors: authorsObjcs, tags: tagsObjs, cover: cover, pdf: pdfObj, context: context)
             print("\(newBook)")
             
-//            let newBook = Book(context: context)
-//            newBook.title = json["title"]
+
         }
 
     }

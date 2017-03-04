@@ -16,7 +16,7 @@ extension LibraryTableViewController: NSFetchedResultsControllerDelegate {
             return _fetchedResultsController!
         }
         
-        _fetchedResultsController = NSFetchedResultsController(fetchRequest: Book.BooksAll(), managedObjectContext: self.context!, sectionNameKeyPath: nil, cacheName: nil)
+        _fetchedResultsController = NSFetchedResultsController(fetchRequest: Book.BooksAll(), managedObjectContext: self.context!, sectionNameKeyPath: "Tags.name", cacheName: nil)
         _fetchedResultsController?.delegate = self
         
         do {

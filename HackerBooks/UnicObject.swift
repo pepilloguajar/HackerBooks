@@ -9,7 +9,7 @@
 import CoreData
 
 
-func unicObjectWithValue(_ value: String, forEntity: String, forKey: String, context : NSManagedObjectContext) -> Bool{
+func unicObjectWithValue(_ value: String, forEntity: String, forKey: String, context : NSManagedObjectContext) -> Any?{
     var objs: [Any]?
     
     switch forEntity {
@@ -22,17 +22,53 @@ func unicObjectWithValue(_ value: String, forEntity: String, forKey: String, con
         } catch  {
             print("error")
         }
+    case "Tag":
+        let fetchRequest: NSFetchRequest<BookTag> = BookTag.fetchRequest()
+        fetchRequest.fetchBatchSize = 1
+        fetchRequest.predicate = NSPredicate(format: "%K = %@", forKey, value)
+        do {
+            objs = try context.fetch(fetchRequest)
+        } catch  {
+            print("error")
+        }
+    case "Author":
+        let fetchRequest: NSFetchRequest<Author> = Author.fetchRequest()
+        fetchRequest.fetchBatchSize = 1
+        fetchRequest.predicate = NSPredicate(format: "%K = %@", forKey, value)
+        do {
+            objs = try context.fetch(fetchRequest)
+        } catch  {
+            print("error")
+        }
+    case "BookCoverPhoto":
+        let fetchRequest: NSFetchRequest<BookCoverPhoto> = BookCoverPhoto.fetchRequest()
+        fetchRequest.fetchBatchSize = 1
+        fetchRequest.predicate = NSPredicate(format: "%K = %@", forKey, value)
+        do {
+            objs = try context.fetch(fetchRequest)
+        } catch  {
+            print("error")
+        }
+    case "PDF":
+        let fetchRequest: NSFetchRequest<PDF> = PDF.fetchRequest()
+        fetchRequest.fetchBatchSize = 1
+        fetchRequest.predicate = NSPredicate(format: "%K = %@", forKey, value)
+        do {
+            objs = try context.fetch(fetchRequest)
+        } catch  {
+            print("error")
+        }
     default:
-        return false
+        return nil
     }
     
     guard let results = objs else {
-        return false
+        return nil
     }
     if results.count > 0{
-        return true
+        return results[0]
     }else{
-        return false
+        return nil
     }
     
     

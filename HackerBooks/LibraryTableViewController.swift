@@ -23,24 +23,6 @@ class LibraryTableViewController: UITableViewController {
     
     
         
-//    //MARK: - Properties
-//    var model : Library
-//    
-//    // property delegate
-//    weak var delegate : LibraryTableViewControllerDelegate?
-//
-//    
-//    //MARK: - Init
-//    init(model: Library){
-//        self.model = model
-//        super.init(nibName: nil, bundle: nil)
-//    }
-//    
-//    required init?(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-    
-        
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Library"
@@ -53,7 +35,6 @@ class LibraryTableViewController: UITableViewController {
         //unsubscribe()
     }
     
-
 
 
     // MARK: - Table view data source
@@ -72,9 +53,35 @@ class LibraryTableViewController: UITableViewController {
 //        return tagForSection(section: section).name
 //    }
     
+    
     //Utils tabla
     func configureCell(_ cell: UITableViewCell, withBook book: Book) {
         cell.textLabel!.text = book.title
+        guard let authorsSet = book.authors else { return }
+        let authors = stringToNSSetAuthors(aSet: authorsSet)
+        cell.detailTextLabel?.text = authors
+        cell.imageView?.image = UIImage(named: "bookDefault.jpg")
+        
+        guard let coverObj = book.coverPhoto else { return }
+        if let cover = coverObj.data{
+            cell.imageView?.image = UIImage(data: cover as Data)
+        }else{
+            //Descarglo la imagen
+//            print("A descargar y guardar")
+            DispatchQueue.global().async {
+                let data = try? Data(contentsOf: (URL(string:coverObj.remoteURLString!))! )
+                DispatchQueue.main.async {
+                    guard let dataOk = data else{ return }
+                    if let img = UIImage(data: dataOk){
+                        cell.imageView?.image = img
+                        //Lo guardo en local y guardo su URL
+                        coverObj.data = dataOk as NSData?
+                    }
+                }
+            }
+        }
+        
+        
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -95,77 +102,40 @@ class LibraryTableViewController: UITableViewController {
         return acell
         
         
-        /*
-        let cellId = "BookCell"
-        
-        let tag = tagForSection(section: indexPath.section)
-        
-        
-        
-        var cell = tableView.dequeueReusableCell(withIdentifier: cellId)
-        
-        if cell == nil{
-            // El opcional está vacio y creamos la celda
-            cell = UITableViewCell(style: .subtitle, reuseIdentifier: cellId)
-        }
-        
-        guard let book = model.book(fotTagName: tag, at: indexPath.row) else{
-            return cell!
-        }
-        
-        cell?.textLabel?.text = book.title
-        cell?.detailTextLabel?.text = book.authorsName
-        cell?.imageView?.image = UIImage(named: "bookDefault.jpg")
-        
-        // Cargo las imágenes del libro 
-        // Si no están descargadas las descargo y guardo
-        // Si están descargadas las muestro
-        if let dataImg = loadFile(fileName: String(book.urlBookCover.hashValue)){
-            cell?.imageView?.image = UIImage(data: dataImg)
-            
-        }else{
-            // para no bloquear UI
-            DispatchQueue.global().async {
-                let data = try? Data(contentsOf: (book.urlBookCover) )
-                DispatchQueue.main.async {
-                    guard let dataOk = data else{
-                        return
-                    }
-                    if let img = UIImage(data: dataOk){
-                        cell?.imageView?.image = img
-                        //Lo guardo en local y guardo su URL
-                        saveFile(data: dataOk, withName: String(book.urlBookCover.hashValue))
-                    }
-                }
-            }
-        }
-
-        
-        return cell!
-        */
     }
     
     //MARK: - TableView Dalegate
-    // Al seleccionar un elemento de la tabla
-//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        
-//        let tag = tagForSection(section: indexPath.section)
-//        guard let book = model.book(fotTagName: tag, at: indexPath.row) else{
-//            return
-//        }
-//        
-//        //        let bookVC = BookViewController(model: book!)
-//        
-//        //        self.navigationController?.pushViewController(bookVC, animated: true)
-//        
-//        
-//        // Avisamos al delegado
-//        delegate?.libraryTableViewController(self, didSelectBook: book)
-//       
-//        //Enviamos Notificacion 
-//        notify(bookChanged: book)
-//        
-//    }
+    //Al seleccionar un elemento de la tabla
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let obj = self._fetchedResultsController?.object(at: indexPath)
+        guard let book = obj, let context = context else {return}
+        let bookVC = BookViewController(model: book, context: context)
+        
+        self.navigationController?.pushViewController(bookVC, animated: true)
+        
+        
+        
+        
+        /*
+        let tag = tagForSection(section: indexPath.section)
+        guard let book = model.book(fotTagName: tag, at: indexPath.row) else{
+            return
+        }
+        
+        //        let bookVC = BookViewController(model: book!)
+        
+        //        self.navigationController?.pushViewController(bookVC, animated: true)
+        
+        
+        // Avisamos al delegado
+        delegate?.libraryTableViewController(self, didSelectBook: book)
+       
+        //Enviamos Notificacion 
+        notify(bookChanged: book)
+ */
+        
+    }
     
     
 //    //MARK: - Utils

@@ -5,10 +5,15 @@
 //  Created by Jose Javier Montes Romero on 3/2/17.
 //  Copyright © 2017 Jose Javier Montes Romero. All rights reserved.
 //
-/*
+
 import UIKit
+import CoreData
 
 class PDFReaderViewController: UIViewController {
+    
+    //CoreData
+    var context: NSManagedObjectContext?
+    
     
     //MARK: - Properties
     var model : Book
@@ -52,9 +57,9 @@ class PDFReaderViewController: UIViewController {
     //MARK: - Async
     func syncViewWithModel(book : Book) {
         
-        
-        if let dataPdf = loadFile(fileName: String(book.urlBookPDF.hashValue)){
-            webView.load(dataPdf, mimeType: "application/pdf", textEncodingName: "utf8", baseURL: book.urlBookPDF)
+        let baseURL = URL(string: (book.pdf?.urlString!)!)!
+        if let dataPdf = book.pdf?.data{
+            webView.load(dataPdf as Data, mimeType: "application/pdf", textEncodingName: "utf8", baseURL: baseURL)
         }else{
             
             loaderIndicator.isHidden = false
@@ -64,20 +69,20 @@ class PDFReaderViewController: UIViewController {
                 return
             }
             
-            webView.load(pdfData, mimeType: "application/pdf", textEncodingName: "utf8", baseURL: book.urlBookPDF)
+            webView.load(pdfData, mimeType: "application/pdf", textEncodingName: "utf8", baseURL: baseURL)
             
             // para no bloquear UI
             DispatchQueue.global().async {
-                let data = try? Data(contentsOf: book.urlBookPDF )
+                let data = try? Data(contentsOf: baseURL )
                 DispatchQueue.main.async {
                     guard let dataOk = data else{
                         return
                     }
                     if data != nil{
-                        self.webView.load(dataOk, mimeType: "application/pdf", textEncodingName: "utf8", baseURL: book.urlBookPDF)
+                        self.webView.load(dataOk, mimeType: "application/pdf", textEncodingName: "utf8", baseURL: baseURL)
                         self.loaderIndicator.isHidden = true
                         self.loaderIndicator.stopAnimating()
-                        saveFile(data: dataOk, withName: String(book.urlBookPDF.hashValue))
+                        book.pdf?.data = data as NSData?
                     }
                 }
             }
@@ -121,7 +126,7 @@ extension PDFReaderViewController{
     
 }
 
-*/
+
 
 
 

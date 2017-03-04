@@ -27,7 +27,7 @@ public  func saveContext(context: NSManagedObjectContext) {
             try context.save()
         } catch {
             let nserror = error as NSError
-            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            //fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
         }
     }
 }
