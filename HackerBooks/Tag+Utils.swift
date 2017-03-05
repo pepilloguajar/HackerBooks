@@ -25,7 +25,7 @@ extension Tag{
         let fetchRequest: NSFetchRequest<Tag> = Tag.fetchRequest()
         fetchRequest.fetchBatchSize = 20
         
-        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
+        let sortDescriptor = NSSortDescriptor(key: "proxyForSorting", ascending: true)
         
         fetchRequest.sortDescriptors = [sortDescriptor]
         

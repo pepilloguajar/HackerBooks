@@ -20,10 +20,10 @@ extension BookTag{
         let fetchRequest: NSFetchRequest<BookTag> = BookTag.fetchRequest()
         fetchRequest.fetchBatchSize = 20
         
-        let sortDescriptor = NSSortDescriptor(key: "tag.proxyForSorting", ascending: true)
+        let tagsOrder = NSSortDescriptor(key: "tag.proxyForSorting", ascending: true)
         let titleBook = NSSortDescriptor(key: "books.title", ascending: true)
         
-        fetchRequest.sortDescriptors = [sortDescriptor,titleBook]
+        fetchRequest.sortDescriptors = [tagsOrder,titleBook]
         
         //fetchRequest.predicate = NSPredicate(format: "notebook = %@", notebook)
         
