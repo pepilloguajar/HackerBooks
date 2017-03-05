@@ -23,6 +23,15 @@ func unicObjectWithValue(_ value: String, forEntity: String, forKey: String, con
             print("error")
         }
     case "Tag":
+        let fetchRequest: NSFetchRequest<Tag> = Tag.fetchRequest()
+        fetchRequest.fetchBatchSize = 1
+        fetchRequest.predicate = NSPredicate(format: "%K = %@", forKey, value)
+        do {
+            objs = try context.fetch(fetchRequest)
+        } catch  {
+            print("error")
+        }
+    case "BookTag":
         let fetchRequest: NSFetchRequest<BookTag> = BookTag.fetchRequest()
         fetchRequest.fetchBatchSize = 1
         fetchRequest.predicate = NSPredicate(format: "%K = %@", forKey, value)

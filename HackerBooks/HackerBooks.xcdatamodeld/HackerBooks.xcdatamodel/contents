@@ -23,11 +23,6 @@
         <relationship name="coverPhoto" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="BookCoverPhoto" inverseName="book" inverseEntity="BookCoverPhoto" syncable="YES"/>
         <relationship name="pdf" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="PDF" inverseName="book" inverseEntity="PDF" syncable="YES"/>
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="BookTag" inverseName="books" inverseEntity="BookTag" syncable="YES"/>
-        <uniquenessConstraints>
-            <uniquenessConstraint>
-                <constraint value="title"/>
-            </uniquenessConstraint>
-        </uniquenessConstraints>
     </entity>
     <entity name="BookCoverPhoto" representedClassName="BookCoverPhoto" syncable="YES" codeGenerationType="class">
         <attribute name="data" optional="YES" attributeType="Binary" syncable="YES"/>
@@ -36,20 +31,27 @@
     </entity>
     <entity name="BookTag" representedClassName="BookTag" syncable="YES" codeGenerationType="class">
         <attribute name="name" attributeType="String" indexed="YES" syncable="YES"/>
-        <relationship name="books" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Book" inverseName="tags" inverseEntity="Book" syncable="YES"/>
+        <relationship name="books" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Book" inverseName="tags" inverseEntity="Book" syncable="YES"/>
+        <relationship name="tag" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Tag" inverseName="bookTags" inverseEntity="Tag" syncable="YES"/>
     </entity>
     <entity name="PDF" representedClassName="PDF" syncable="YES" codeGenerationType="class">
         <attribute name="data" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="urlString" attributeType="String" syncable="YES"/>
         <relationship name="book" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Book" inverseName="pdf" inverseEntity="Book" syncable="YES"/>
     </entity>
+    <entity name="Tag" representedClassName="Tag" syncable="YES" codeGenerationType="class">
+        <attribute name="name" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="proxyForSorting" attributeType="String" syncable="YES"/>
+        <relationship name="bookTags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="BookTag" inverseName="tag" inverseEntity="BookTag" syncable="YES"/>
+    </entity>
     <elements>
         <element name="Annotation" positionX="-218" positionY="144" width="128" height="118"/>
         <element name="AnnotationPhoto" positionX="-497" positionY="135" width="128" height="73"/>
-        <element name="Author" positionX="-504" positionY="-153" width="128" height="73"/>
+        <element name="Author" positionX="108" positionY="18" width="128" height="73"/>
         <element name="Book" positionX="-207" positionY="-151" width="128" height="148"/>
         <element name="BookCoverPhoto" positionX="54" positionY="-306" width="128" height="88"/>
-        <element name="BookTag" positionX="61" positionY="-36" width="128" height="73"/>
+        <element name="BookTag" positionX="-450" positionY="-117" width="128" height="88"/>
         <element name="PDF" positionX="-189" positionY="-336" width="128" height="88"/>
+        <element name="Tag" positionX="-702" positionY="-133" width="128" height="88"/>
     </elements>
 </model>

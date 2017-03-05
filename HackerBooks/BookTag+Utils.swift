@@ -10,23 +10,61 @@ import CoreData
 
 extension BookTag{
     
-    convenience init(name: String, context: NSManagedObjectContext){
+    convenience init(name: String, tag: Tag, context: NSManagedObjectContext){
         self.init(context: context)
         self.name = name
+        self.tag = tag
     }
+    
+    class func bookTagsAll() -> NSFetchRequest<BookTag>{
+        let fetchRequest: NSFetchRequest<BookTag> = BookTag.fetchRequest()
+        fetchRequest.fetchBatchSize = 20
+        
+        let sortDescriptor = NSSortDescriptor(key: "tag.proxyForSorting", ascending: true)
+        let titleBook = NSSortDescriptor(key: "books.title", ascending: true)
+        
+        fetchRequest.sortDescriptors = [sortDescriptor,titleBook]
+        
+        //fetchRequest.predicate = NSPredicate(format: "notebook = %@", notebook)
+        
+        
+        return fetchRequest
+    }
+    
+
     
     class func arrayTagWithArrayOfStrings(arrayTagsString: [String], context: NSManagedObjectContext) -> [BookTag] {
         
-        //let arrayTagsObj: [BookTag] = arrayTagsString.map( { BookTag(name: $0, context: context) })
-        let arrayTagsObj: [BookTag] = arrayTagsString.map { (name) -> BookTag in
-            let tag = unicObjectWithValue(name, forEntity: "BookTag", forKey: "name", context: context)
-            if tag == nil {
-                return BookTag(name: name, context: context)
+        let arrayTagsObj = arrayTagsString.map { (name) -> BookTag in
+            
+            //Crear el Tag y BookTag
+            if let tag = unicObjectWithValue(name, forEntity: "Tag", forKey: "name", context: context){
+                return BookTag(name: name, tag: tag as! Tag, context: context)
             }else{
-                return tag as! BookTag
+                let aTag = Tag(name: name, context: context)
+                return BookTag(name: name, tag: aTag, context: context)
             }
+
         }
         return arrayTagsObj
+        
+    }
+
+    
+}
+
+
+extension BookTag : Comparable{
+    
+    public static func <(lhs: BookTag, rhs: BookTag) -> Bool{
+        
+        if (lhs.name == Constants.favoriteTag){
+            return true
+        }else if (rhs.name == Constants.favoriteTag){
+            return false
+        }else{
+            return (lhs.name! < rhs.name!)
+        }
         
     }
     

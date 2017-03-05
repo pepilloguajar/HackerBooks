@@ -10,6 +10,7 @@
 		920250C31E673BA00014D91E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 920250C21E673BA00014D91E /* CoreData.framework */; };
 		920250C81E6761010014D91E /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920250C71E6761010014D91E /* CoreDataManager.swift */; };
 		920250CC1E6831360014D91E /* HackerBooks.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 920250CA1E6831360014D91E /* HackerBooks.xcdatamodeld */; };
+		927088421E6C950400518E5D /* Tag+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927088411E6C950400518E5D /* Tag+Utils.swift */; };
 		929BF16C1E40ED2B00698665 /* MultiDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929BF16B1E40ED2B00698665 /* MultiDictionary.swift */; };
 		929BF16E1E40F63000698665 /* books_readable.json in Resources */ = {isa = PBXBuildFile; fileRef = 929BF16D1E40F63000698665 /* books_readable.json */; };
 		929BF1701E40F69000698665 /* JSONProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929BF16F1E40F69000698665 /* JSONProcessing.swift */; };
@@ -49,6 +50,7 @@
 		920250C21E673BA00014D91E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		920250C71E6761010014D91E /* CoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		920250CB1E6831360014D91E /* HackerBooks.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HackerBooks.xcdatamodel; sourceTree = "<group>"; };
+		927088411E6C950400518E5D /* Tag+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tag+Utils.swift"; sourceTree = "<group>"; };
 		929BF16B1E40ED2B00698665 /* MultiDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiDictionary.swift; sourceTree = "<group>"; };
 		929BF16D1E40F63000698665 /* books_readable.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = books_readable.json; sourceTree = "<group>"; };
 		929BF16F1E40F69000698665 /* JSONProcessing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONProcessing.swift; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 			children = (
 				92E2FDA31E685CFD00DBA826 /* Book+Utils.swift */,
 				92E2FDAD1E697A8200DBA826 /* BookTag+Utils.swift */,
+				927088411E6C950400518E5D /* Tag+Utils.swift */,
 				92E2FDA91E69723200DBA826 /* Author+Utils.swift */,
 				92E2FDAF1E697C8E00DBA826 /* BookCoverPhoto+Utils.swift */,
 				92E2FDAB1E69795200DBA826 /* PDF+Utils.swift */,
@@ -356,6 +359,7 @@
 				929BF1701E40F69000698665 /* JSONProcessing.swift in Sources */,
 				929BF16C1E40ED2B00698665 /* MultiDictionary.swift in Sources */,
 				92E2FDBE1E6C358800DBA826 /* AddEditNoteViewController.swift in Sources */,
+				927088421E6C950400518E5D /* Tag+Utils.swift in Sources */,
 				929BF1801E44F50600698665 /* BookViewController.swift in Sources */,
 				92E2FDBC1E6C2B0600DBA826 /* NoteCell.swift in Sources */,
 				92E2FDA21E68530100DBA826 /* LibrayController+NSFetchResultController.swift in Sources */,

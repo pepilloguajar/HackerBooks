@@ -12,7 +12,7 @@ import CoreData
 class LibraryTableViewController: UITableViewController {
     
     //Core Data
-    internal var _fetchedResultsController: NSFetchedResultsController<Book>? = nil
+    internal var _fetchedResultsController: NSFetchedResultsController<BookTag>? = nil
     internal var context: NSManagedObjectContext?
 
     
@@ -40,18 +40,47 @@ class LibraryTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return self.fetchedResultsController.sections?.count ?? 0
+
+        do {
+            let objs = try self.context?.fetch(Tag.tagsAll())
+            guard let objsOk = objs else{return 1}
+            let a = objsOk.map({$0.name!})
+            return objsOk.count
+        } catch  {
+            print("error in number of section")
+            return 1
+        }
+        
+
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.fetchedResultsController.sections![section].numberOfObjects
+        
+        do {
+            let objs = try self.context?.fetch(Tag.tagsAll())
+            guard let objsOk = objs else{return 1}
+            let row = (objsOk[section].bookTags?.count)!
+            return row
+        } catch  {
+            print("error in number of section")
+            return 0
+        }
+        
+        //return self.fetchedResultsController.sections![section].numberOfObjects
     }
 
 
-//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        return tagForSection(section: section).name
-//    }
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        do {
+            let objs = try self.context?.fetch(Tag.tagsAll())
+            guard let objsOk = objs else{return "Error...."}
+            return objsOk[section].name
+            } catch  {
+            print("error in number of section")
+            return "Error..."
+
+        }
+    }
     
     
     //Utils tabla
@@ -97,8 +126,8 @@ class LibraryTableViewController: UITableViewController {
         }
         guard let acell = cell else { return cell! }
         //let cell = tableView.dequeueReusableCell(withIdentifier: "BookCell", for: indexPath)
-        let book = self.fetchedResultsController.object(at: indexPath)
-        self.configureCell(acell, withBook: book)
+        let bookTag = self.fetchedResultsController.object(at: indexPath)
+        self.configureCell(acell, withBook: bookTag.books!)
         return acell
         
         
@@ -109,8 +138,8 @@ class LibraryTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let obj = self._fetchedResultsController?.object(at: indexPath)
-        guard let book = obj, let context = context else {return}
-        let bookVC = BookViewController(book: book, context: context)
+        guard let bookTag = obj, let context = context else {return}
+        let bookVC = BookViewController(book: bookTag.books!, context: context)
         
         self.navigationController?.pushViewController(bookVC, animated: true)
         

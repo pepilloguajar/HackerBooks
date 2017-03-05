@@ -32,6 +32,62 @@ extension Book{
         
         return fetchRequest
     }
+    
+    
+    //MARK: - Gestion Favoritos
+    func addTagFavorite() {
+        guard let context = self.managedObjectContext else {return}
+        
+        if let tag = unicObjectWithValue(Constants.favoriteTag, forEntity: "Tag", forKey: "name", context: context){
+            let bookTag = BookTag(name: Constants.favoriteTag, tag: tag as! Tag, context: context)
+            bookTag.books = self
+        }else{
+            let tag = Tag(name: Constants.favoriteTag, context: context)
+            let bookTag = BookTag(name: Constants.favoriteTag, tag: tag, context: context)
+            bookTag.books = self
+        }
+        
+        saveContext(context: context)
+        
+    }
+    
+    func removeTagFavorite() {
+        guard let context = self.managedObjectContext else {return}
+        let bookTags = self.tags?.allObjects as! [BookTag]
+        var tagToDelete: BookTag?
+        for tag in bookTags{
+            if tag.name == Constants.favoriteTag{
+                tagToDelete = tag
+            }
+        }
+        //Favorite is empty
+        if let tag = unicObjectWithValue(Constants.favoriteTag, forEntity: "Tag", forKey: "name", context: context){
+            let tagCast = tag as! Tag
+            if tagCast.bookTags?.count == 1{
+                context.delete(tagCast)
+            }
+        }
+        
+        guard let tagToDeleteOk = tagToDelete else{return}
+        context.delete(tagToDeleteOk)
+
+    }
+    
+    
+    //MARK: - Utils
+    class func bookIsFavorite(book: Book) -> Bool{
+        let bookTags = book.tags?.allObjects as! [BookTag]
+        for tag in bookTags{
+            if tag.name == Constants.favoriteTag{
+                return true
+            }
+        }
+        return false
+    }
+    
+    
+    
+    //MARK: - Constructor de Modelo de libros (Library).... buscarle otro sitio....
 
     class func bookWithJSONDictionary(json: [String:String], context: NSManagedObjectContext) {
         //Compruebo que estén todos los datos correctos en el JSONDictionary
@@ -54,8 +110,8 @@ extension Book{
             let cover = BookCoverPhoto.coverPhotoWithURL(url: imageURLString, context: context)
             let pdfObj = PDF.pdfWithURL(urlString: pdfURLString, context: context)
             
-            Book(title: title, authors: authorsObjcs, tags: tagsObjs, cover: cover, pdf: pdfObj, context: context)
-
+            let b = Book(title: title, authors: authorsObjcs, tags: tagsObjs, cover: cover, pdf: pdfObj, context: context)
+            
         }
 
     }

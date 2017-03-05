@@ -11,5 +11,6 @@ import Foundation
 class Constants {
     
     static let keyFavoriteForUserDefaults = "Favorite"
+    static let favoriteTag = "Favorite"
 
 }

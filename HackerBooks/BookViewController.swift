@@ -91,21 +91,26 @@ class BookViewController: UIViewController {
             self.lastRead.text = "Nunca"
         }
         
-        
-        /*
-        if model.containsFavoriteTag(){
-            favoriteView.title = "♥"
+        if Book.bookIsFavorite(book: book){
+            self.favoriteView.title = "♥"
         }else{
-            favoriteView.title = "♡"
+            self.favoriteView.title = "♡"
         }
- */
+        
         
     }
     
 
     @IBAction func isFavorite(_ sender: UIBarButtonItem) {
 
-        
+        if Book.bookIsFavorite(book: book){
+            book.removeTagFavorite()
+        }else{
+            book.addTagFavorite()
+        }
+        saveContext(context: context)
+        syncViewWithModel(book: book)
+
         /*
         if !model.containsFavoriteTag() {
             
@@ -132,9 +137,6 @@ class BookViewController: UIViewController {
 
     }
 
-
-    
-    
 }
 
 /*

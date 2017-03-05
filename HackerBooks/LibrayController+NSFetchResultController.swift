@@ -11,12 +11,12 @@ import CoreData
 
 extension LibraryTableViewController: NSFetchedResultsControllerDelegate {
     
-    var fetchedResultsController: NSFetchedResultsController<Book> {
+    var fetchedResultsController: NSFetchedResultsController<BookTag> {
         if _fetchedResultsController != nil {
             return _fetchedResultsController!
         }
         
-        _fetchedResultsController = NSFetchedResultsController(fetchRequest: Book.BooksAll(), managedObjectContext: self.context!, sectionNameKeyPath: "Tags.name", cacheName: nil)
+        _fetchedResultsController = NSFetchedResultsController(fetchRequest: BookTag.bookTagsAll(), managedObjectContext: self.context!, sectionNameKeyPath: "name", cacheName: nil)
         _fetchedResultsController?.delegate = self
         
         do {
