@@ -16,6 +16,7 @@ class AddEditNoteViewController: UIViewController {
     var oldText: String?
     
     @IBOutlet weak var textNote: UITextView!
+    @IBOutlet weak var trashButton: UIBarButtonItem!
     
     
     override func viewDidLoad() {
@@ -55,6 +56,16 @@ class AddEditNoteViewController: UIViewController {
         
     }
     
+    @IBAction func deleteNote(_ sender: Any) {
+        
+        guard let context = book.managedObjectContext else {return}
+        guard let note = aNote else{return}
+        context.delete(note)
+        _ = self.navigationController?.popViewController(animated: true)
+        
+    }
+    
+    
     
     func syncView() {
         guard let text = self.aNote?.text else {return}
@@ -62,6 +73,7 @@ class AddEditNoteViewController: UIViewController {
         if let label = self.textNote{
             label.text = text
         }
+        self.trashButton.isEnabled = true
        
     }
 

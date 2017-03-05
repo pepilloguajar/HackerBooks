@@ -102,27 +102,43 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="oKH-By-fyA">
-                                <rect key="frame" x="16" y="64" width="343" height="603"/>
+                                <rect key="frame" x="16" y="72" width="343" height="543"/>
                                 <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RyI-Ya-ale">
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <items>
+                                    <barButtonItem enabled="NO" title="Photo" id="D32-1g-Nm8"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="4dx-4X-niS"/>
+                                    <barButtonItem enabled="NO" title="Item" systemItem="trash" id="T1N-wG-yG9">
+                                        <connections>
+                                            <action selector="deleteNote:" destination="lTn-gI-Wid" id="qHc-7g-1Cn"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="oKH-By-fyA" firstAttribute="top" secondItem="flX-Oy-XVN" secondAttribute="bottom" id="5ND-QI-7z3"/>
-                            <constraint firstItem="fpM-bh-lXI" firstAttribute="top" secondItem="oKH-By-fyA" secondAttribute="bottom" id="V8P-pu-b7K"/>
+                            <constraint firstItem="RyI-Ya-ale" firstAttribute="leading" secondItem="uQ6-OQ-tYV" secondAttribute="leading" id="3os-hb-yuK"/>
+                            <constraint firstItem="RyI-Ya-ale" firstAttribute="bottom" secondItem="fpM-bh-lXI" secondAttribute="top" id="U8a-pp-oX3"/>
+                            <constraint firstItem="RyI-Ya-ale" firstAttribute="centerX" secondItem="oKH-By-fyA" secondAttribute="centerX" id="a2k-BZ-mkE"/>
                             <constraint firstAttribute="trailingMargin" secondItem="oKH-By-fyA" secondAttribute="trailing" id="a5U-dG-sEQ"/>
                             <constraint firstItem="oKH-By-fyA" firstAttribute="leading" secondItem="uQ6-OQ-tYV" secondAttribute="leadingMargin" id="joa-vo-Qrm"/>
+                            <constraint firstItem="RyI-Ya-ale" firstAttribute="top" secondItem="oKH-By-fyA" secondAttribute="bottom" constant="8" id="vSH-I0-BAW"/>
+                            <constraint firstItem="oKH-By-fyA" firstAttribute="top" secondItem="flX-Oy-XVN" secondAttribute="bottom" constant="8" id="wSg-Cz-8PR"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="textNote" destination="oKH-By-fyA" id="KY5-5j-r17"/>
+                        <outlet property="trashButton" destination="T1N-wG-yG9" id="cLu-us-4gt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7A5-6d-qjp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1846" y="-701"/>
+            <point key="canvasLocation" x="1845.5999999999999" y="-701.19940029985014"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="SWC-qD-bYz">
