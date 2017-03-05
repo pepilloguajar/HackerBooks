@@ -57,8 +57,12 @@ class AddEditNoteViewController: UIViewController {
     
     
     func syncView() {
-        self.oldText = self.aNote?.text!
-        self.textNote.text = self.oldText
+        guard let text = self.aNote?.text else {return}
+        self.oldText = text
+        if let label = self.textNote{
+            label.text = text
+        }
+       
     }
 
 

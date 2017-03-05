@@ -29,10 +29,18 @@ class NotesViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "addEditNote"{
+        if segue.identifier == "addNote"{
             let vc = segue.destination as! AddEditNoteViewController
             vc.book = book
+        }else if segue.identifier == "editNote"{
+            let indexpath = collectionView.indexPathsForSelectedItems?.first
+            let note = _fetchedResultsController?.object(at: indexpath!)
+            let vc = segue.destination as! AddEditNoteViewController
+            vc.book = book
+            vc.aNote = note
+        
         }
+        
         
     }
 

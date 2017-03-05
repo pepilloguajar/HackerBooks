@@ -56,6 +56,8 @@ extension NotesViewController: NSFetchedResultsControllerDelegate {
             collectionView.insertItems(at: [newIndexPath!])
         case .delete:
             collectionView.deleteItems(at: [indexPath!])
+        case .update:
+            (collectionView.cellForItem(at: indexPath!) as! NoteCell).textLabel.text = self._fetchedResultsController?.object(at: indexPath!).text
         default:
             break
         }

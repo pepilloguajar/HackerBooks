@@ -56,6 +56,7 @@
                                         </constraints>
                                         <connections>
                                             <outlet property="textLabel" destination="5pR-JM-EbG" id="eDP-xE-g4w"/>
+                                            <segue destination="lTn-gI-Wid" kind="show" identifier="editNote" id="Ite-l4-tSD"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -76,7 +77,7 @@
                     <navigationItem key="navigationItem" id="zfo-D8-ei1">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="sDA-Ao-5dk">
                             <connections>
-                                <segue destination="lTn-gI-Wid" kind="show" identifier="addEditNote" id="Xes-FR-y0Q"/>
+                                <segue destination="lTn-gI-Wid" kind="show" identifier="addNote" id="Xes-FR-y0Q"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -142,4 +143,7 @@
             <point key="canvasLocation" x="13.6" y="-644.52773613193403"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Xes-FR-y0Q"/>
+    </inferredMetricsTieBreakers>
 </document>
