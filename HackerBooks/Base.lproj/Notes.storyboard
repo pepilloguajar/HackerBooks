@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ATm-GX-TZJ">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Notes View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController storyboardIdentifier="notesVC" id="BYZ-38-t0r" customClass="NotesViewController" customModule="HackerBooks" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="kso-b3-JMm">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="5KQ-G5-XIx">
+                                    <size key="itemSize" width="142" height="152"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="NoteCell" id="fR1-bi-kgN" customClass="NoteCell" customModule="HackerBooks" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="142" height="152"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="142" height="152"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TextLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5pR-JM-EbG">
+                                                    <rect key="frame" x="16" y="66" width="110" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </view>
+                                        <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="5pR-JM-EbG" firstAttribute="centerY" secondItem="fR1-bi-kgN" secondAttribute="centerY" id="59u-eC-qz9"/>
+                                            <constraint firstItem="5pR-JM-EbG" firstAttribute="leading" secondItem="fR1-bi-kgN" secondAttribute="leadingMargin" constant="8" id="9D2-N7-aHS"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="5pR-JM-EbG" secondAttribute="trailing" constant="8" id="DVQ-y7-jSg"/>
+                                            <constraint firstItem="5pR-JM-EbG" firstAttribute="centerX" secondItem="fR1-bi-kgN" secondAttribute="centerX" id="Jug-3y-K9j"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="textLabel" destination="5pR-JM-EbG" id="eDP-xE-g4w"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="RTQ-Cp-RSC"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="eqM-gS-Nt7"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="kso-b3-JMm" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="Szi-L3-cwT"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="kso-b3-JMm" secondAttribute="bottom" id="o3i-sn-fB0"/>
+                            <constraint firstItem="kso-b3-JMm" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ogL-m8-a3j"/>
+                            <constraint firstAttribute="trailing" secondItem="kso-b3-JMm" secondAttribute="trailing" id="puc-Rg-nvi"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="zfo-D8-ei1">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="sDA-Ao-5dk">
+                            <connections>
+                                <segue destination="lTn-gI-Wid" kind="show" identifier="addEditNote" id="Xes-FR-y0Q"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="collectionView" destination="kso-b3-JMm" id="eB5-6t-8xB"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="869.60000000000002" y="-645.42728635682158"/>
+        </scene>
+        <!--Add Edit Note View Controller-->
+        <scene sceneID="588-ZE-Osm">
+            <objects>
+                <viewController id="lTn-gI-Wid" customClass="AddEditNoteViewController" customModule="HackerBooks" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="flX-Oy-XVN"/>
+                        <viewControllerLayoutGuide type="bottom" id="fpM-bh-lXI"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="uQ6-OQ-tYV">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="oKH-By-fyA">
+                                <rect key="frame" x="16" y="64" width="343" height="603"/>
+                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="oKH-By-fyA" firstAttribute="top" secondItem="flX-Oy-XVN" secondAttribute="bottom" id="5ND-QI-7z3"/>
+                            <constraint firstItem="fpM-bh-lXI" firstAttribute="top" secondItem="oKH-By-fyA" secondAttribute="bottom" id="V8P-pu-b7K"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="oKH-By-fyA" secondAttribute="trailing" id="a5U-dG-sEQ"/>
+                            <constraint firstItem="oKH-By-fyA" firstAttribute="leading" secondItem="uQ6-OQ-tYV" secondAttribute="leadingMargin" id="joa-vo-Qrm"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="textNote" destination="oKH-By-fyA" id="KY5-5j-r17"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7A5-6d-qjp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1846" y="-701"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="SWC-qD-bYz">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ATm-GX-TZJ" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="DC0-Lr-Me0">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="ZwA-u3-JlF"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hxM-Pz-Ero" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="13.6" y="-644.52773613193403"/>
+        </scene>
+    </scenes>
+</document>

@@ -16,16 +16,16 @@ class PDFReaderViewController: UIViewController {
     
     
     //MARK: - Properties
-    var model : Book
+    var book : Book
     
     @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var loaderIndicator: UIActivityIndicatorView!
     
     //MARK: - Init
-    init(model : Book){
-        self.model = model
+    init(book : Book){
+        self.book = book
         super.init(nibName: nil, bundle: nil)
-        title = model.title
+        title = book.title
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -37,19 +37,26 @@ class PDFReaderViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        syncViewWithModel(book: model)
+        let notesButton = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(goToNotes(_:)))
+        self.navigationItem.rightBarButtonItem = notesButton
+        
+        
+        syncViewWithModel(book: book)
+        book.lastRead = NSDate()
+        
         self.edgesForExtendedLayout = []
         
         // alta en la notificación
-        subscribe()
+        //subscribe()
         
         
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        saveContext(context: context!)
         // baja en la notificacion
-        unsubscribe()
+        //unsubscribe()
     }
     
     
@@ -91,11 +98,19 @@ class PDFReaderViewController: UIViewController {
     }
     
     
+    func goToNotes(_ sender: Any){
+        let sb = UIStoryboard(name: "Notes", bundle: nil)
+        let notesVC = sb.instantiateViewController(withIdentifier: "notesVC") as! NotesViewController
+        notesVC.book = book
+        
+        self.navigationController?.pushViewController(notesVC, animated: true)
+    }
+    
     
 }
 
 
-
+/*
 
 //MARK: - Notifications
 extension PDFReaderViewController{
@@ -109,7 +124,7 @@ extension PDFReaderViewController{
                         
                         let aBook = note.userInfo?[LibraryTableViewController.bookKey] as! Book
                         //cambio el modelo
-                        self.model = aBook
+                        self.book = aBook
                         
                         //actulizo las vistas
                         self.syncViewWithModel(book: aBook)
@@ -127,7 +142,7 @@ extension PDFReaderViewController{
 }
 
 
-
+*/
 
 
 

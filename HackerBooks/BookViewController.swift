@@ -18,16 +18,17 @@ class BookViewController: UIViewController {
     static var notiBookKey = "notiBookKey"
 
     //MARK: - Properties
-    var model : Book
+    var book : Book
     
     @IBOutlet weak var coverBook: UIImageView!
     @IBOutlet weak var authors: UILabel!
     @IBOutlet weak var tags: UILabel!
     @IBOutlet weak var favoriteView: UIBarButtonItem!
+    @IBOutlet weak var lastRead: UILabel!
     
     //MARK: - Init
-    init(model: Book, context: NSManagedObjectContext){
-        self.model = model
+    init(book: Book, context: NSManagedObjectContext){
+        self.book = book
         self.context = context
         
         super.init(nibName: nil, bundle: nil)
@@ -43,7 +44,7 @@ class BookViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        syncViewWithModel(book: model)
+        syncViewWithModel(book: book)
         self.edgesForExtendedLayout = []
     }
     
@@ -82,6 +83,15 @@ class BookViewController: UIViewController {
         tags.text = stringToNSSetTags(aSet: tagsSet)
         title = book.title
         
+        if let lastReadBook = book.lastRead {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd-MM-yyyy HH:mm:ss"
+            self.lastRead.text = dateFormatter.string(from: lastReadBook as Date)
+        }else{
+            self.lastRead.text = "Nunca"
+        }
+        
+        
         /*
         if model.containsFavoriteTag(){
             favoriteView.title = "♥"
@@ -114,7 +124,7 @@ class BookViewController: UIViewController {
 
     @IBAction func readPdf(_ sender: UIBarButtonItem) {
         
-        let pdfVC = PDFReaderViewController(model: model)
+        let pdfVC = PDFReaderViewController(book: book)
         // inyecto el contexto por property para probar ambas formas
         pdfVC.context = context
         

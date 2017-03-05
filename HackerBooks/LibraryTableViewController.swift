@@ -110,7 +110,7 @@ class LibraryTableViewController: UITableViewController {
         
         let obj = self._fetchedResultsController?.object(at: indexPath)
         guard let book = obj, let context = context else {return}
-        let bookVC = BookViewController(model: book, context: context)
+        let bookVC = BookViewController(book: book, context: context)
         
         self.navigationController?.pushViewController(bookVC, animated: true)
         
