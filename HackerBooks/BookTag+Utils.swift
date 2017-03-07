@@ -25,11 +25,26 @@ extension BookTag{
         
         fetchRequest.sortDescriptors = [tagsOrder,titleBook]
         
-        //fetchRequest.predicate = NSPredicate(format: "notebook = %@", notebook)
         
         
         return fetchRequest
     }
+    
+    class func bookForSearch(_ text: String) -> NSFetchRequest<BookTag>{
+        
+        let fetchRequest: NSFetchRequest<BookTag> = BookTag.fetchRequest()
+        fetchRequest.fetchBatchSize = 20
+        
+
+        let titleBook = NSSortDescriptor(key: "books.title", ascending: true)
+        fetchRequest.sortDescriptors = [titleBook]
+        
+        fetchRequest.predicate = NSPredicate(format: "books.title contains[c] %@ OR name contains[c] %@ OR books.authors.fullName contains[c] %@" , argumentArray: [text, text, text])
+
+
+        return fetchRequest
+    }
+
     
 
     

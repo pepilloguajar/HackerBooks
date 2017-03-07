@@ -16,7 +16,12 @@ extension LibraryTableViewController: NSFetchedResultsControllerDelegate {
             return _fetchedResultsController!
         }
         
-        _fetchedResultsController = NSFetchedResultsController(fetchRequest: BookTag.bookTagsAll(), managedObjectContext: self.context!, sectionNameKeyPath: "tag.proxyForSorting", cacheName: nil)
+        if(self.searchController.searchBar.text?.lengthOfBytes(using: .utf8) != 0),
+            let titleSeach = self.searchController.searchBar.text {
+            _fetchedResultsController = NSFetchedResultsController(fetchRequest: BookTag.bookForSearch(titleSeach), managedObjectContext: self.context!, sectionNameKeyPath: nil, cacheName: nil)
+        }else{
+            _fetchedResultsController = NSFetchedResultsController(fetchRequest: BookTag.bookTagsAll(), managedObjectContext: self.context!, sectionNameKeyPath: "tag.proxyForSorting", cacheName: nil)
+        }
         _fetchedResultsController?.delegate = self
         
         do {

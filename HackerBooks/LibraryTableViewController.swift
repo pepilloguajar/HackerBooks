@@ -9,11 +9,13 @@
 import UIKit
 import CoreData
 
-class LibraryTableViewController: UITableViewController {
+class LibraryTableViewController: UITableViewController, UISearchResultsUpdating {
     
     //Core Data
     internal var _fetchedResultsController: NSFetchedResultsController<BookTag>? = nil
     internal var context: NSManagedObjectContext?
+    
+    let searchController = UISearchController(searchResultsController: nil)
 
     
     
@@ -27,6 +29,14 @@ class LibraryTableViewController: UITableViewController {
         super.viewDidLoad()
         title = "Library"
         //subscribe()
+        
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        definesPresentationContext = true
+        tableView.tableHeaderView = searchController.searchBar
+        
+        
+
 
     }
     
@@ -36,49 +46,67 @@ class LibraryTableViewController: UITableViewController {
     }
     
 
+    //MARK: - Protocolo searchViewjh
+    public func updateSearchResults(for searchController: UISearchController){
+        _fetchedResultsController = nil
+        self.tableView.reloadData()
+    }
+    
+    
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
 
-        do {
-            let objs = try self.context?.fetch(Tag.tagsAll())
-            guard let objsOk = objs else{return 1}
-            let a = objsOk.map({$0.name!})
-            return objsOk.count
-        } catch  {
-            print("error in number of section")
+        if self.searchController.searchBar.text?.lengthOfBytes(using: .utf8) != 0{
             return 1
+        }else{
+            do {
+                let objs = try self.context?.fetch(Tag.tagsAll())
+                guard let objsOk = objs else{return 1}
+                return objsOk.count
+            } catch  {
+                print("error in number of section")
+                return 1
+            }
         }
-        
 
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        do {
-            let objs = try self.context?.fetch(Tag.tagsAll())
-            guard let objsOk = objs else{return 1}
-            let row = (objsOk[section].bookTags?.count)!
-            return row
-        } catch  {
-            print("error in number of section")
-            return 0
+        if self.searchController.searchBar.text?.lengthOfBytes(using: .utf8) != 0{
+            return self.fetchedResultsController.sections![section].numberOfObjects
+        }else{
+            
+            do {
+                let objs = try self.context?.fetch(Tag.tagsAll())
+                guard let objsOk = objs else{return 1}
+                let row = (objsOk[section].bookTags?.count)!
+                return row
+            } catch  {
+                print("error in number of section")
+                return 0
+            }
         }
-        
-        //return self.fetchedResultsController.sections![section].numberOfObjects
     }
 
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        do {
-            let objs = try self.context?.fetch(Tag.tagsAll())
-            guard let objsOk = objs else{return "Error...."}
-            return objsOk[section].name
+        
+        if self.searchController.searchBar.text?.lengthOfBytes(using: .utf8) != 0{
+            return "Resultados"
+        }else{
+        
+            do {
+                let objs = try self.context?.fetch(Tag.tagsAll())
+                guard let objsOk = objs else{return "Error...."}
+                return objsOk[section].name
             } catch  {
-            print("error in number of section")
-            return "Error..."
-
+                print("error in number of section")
+                return "Error..."
+                
+            }
         }
     }
     
