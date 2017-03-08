@@ -12,5 +12,6 @@ class Constants {
     
     static let keyFavoriteForUserDefaults = "Favorite"
     static let favoriteTag = "Favorite"
-
+    static let keyLibraryInCoreData = "LibraryInCoreData"
+    static let urlAPILibrary = "https://keepcodigtest.blob.core.windows.net/containerblobstest/books_readable.json"
 }

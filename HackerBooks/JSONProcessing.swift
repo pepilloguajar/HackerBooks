@@ -1,93 +1,94 @@
-//
-//  JSONProcessing.swift
+
 //  HackerBooks
 //
-//  Created by Jose Javier Montes Romero on 31/1/17.
+//  Created by Jose Javier Montes Romero on 8/3/17.
 //  Copyright © 2017 Jose Javier Montes Romero. All rights reserved.
 //
 
 import Foundation
-/*
-{
-    "authors":      "Scott Chacon, Ben Straub",
-    "image_url":    "http://hackershelf.com/media/cache/b4/24/b42409de128aa7f1c9abbbfa549914de.jpg",
-    "pdf_url":      "https://progit2.s3.amazonaws.com/en/2015-03-06-439c2/progit-en.376.pdf",
-    "tags":         "version control, git",
-    "title":        "Pro Git"
-}
- */
+import CoreData
 
-//MARK: - Alias
-typealias JSONObject = String
-typealias JSONDictionary = [String : JSONObject]
-typealias JSONArray = [JSONDictionary]
+typealias JSONArray = [[String:String]]
 
 
-/*
-//MARK: - Decodificacion
-func decode(book dict: JSONDictionary) throws -> Book {
-    
-    //let title = dict["title"]!
-    guard let title = dict["title"] else{
-        throw HackerBooksError.jsonParsingError
-    }
-    
-    guard let authorsString = dict["authors"] else{
-        throw HackerBooksError.jsonParsingError
-    }
-    let authors = parseStringToArray(string: authorsString)
-    
-    guard let tagString = dict["tags"] else {
-        throw HackerBooksError.jsonParsingError
-    }
-    let tags = Tags(parseStringToArray(string: tagString).map({Tag(name: $0)}))
-    
-    guard let imgUrlStr = dict["image_url"], let imageURL = URL(string: imgUrlStr) else {
-        throw HackerBooksError.jsonParsingError
-    }
-
-    guard let pdfUrlStr = dict["pdf_url"], let pdfUrl = URL(string: pdfUrlStr) else {
-        throw HackerBooksError.jsonParsingError
-    }
-    
-    
-    return Book(title: title, authors: authors, tags: tags, urlBookCover: imageURL, urlBookPDF: pdfUrl)
-    
-}
-
-func decode(book dict: JSONDictionary?) throws -> Book  {
-    
-    guard let dict = dict else {
-        throw HackerBooksError.nilJSONObject
-    }
-    return try decode(book: dict)
-    
-}
-
-*/
-
-//MARK: - Loading
-func loadFromLocalFile(fileName name : String, bundle: Bundle = Bundle.main) throws -> JSONArray{
-    
-    if let url = bundle.url(forResource: name),
-        let data = try? Data(contentsOf: url),
-        let maybeArray = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as? JSONArray,
-        let array = maybeArray{
+func jsonforURL(urlString: String, completion: @escaping (JSONArray) -> Void) {
+    if let url = URL(string: urlString){
+        let session = URLSession.shared
         
-        return array
+        let task = session.dataTask(with: url, completionHandler: { (data, response, error) in
+            if let error = error{
+                print("Error in download JSON" + error.localizedDescription)
+                return
+            }
+            
+            guard let data = data else{return}
+            
+            let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as! JSONArray
+            guard let aJson = json else{return}
+            completion(aJson)
+            
+        })
+        task.resume()
+    }
+    
+}
+
+
+
+func downloadAndProcessionJSON (context: NSManagedObjectContext, completion: @escaping () -> ()){
+    
+    
+    let userData = UserDefaults.standard
+    if !(userData.bool(forKey: Constants.keyLibraryInCoreData) ){
         
+        DispatchQueue.global().async {
+            jsonforURL(urlString: Constants.urlAPILibrary, completion: { (json) in
+                
+                DispatchQueue.main.async{
+                    for abook in json{
+                        bookWithJSONDictionary(json: abook, context: context)
+                    }
+                    saveContext(context: context)
+                    userData.set(true, forKey: Constants.keyLibraryInCoreData)
+                    completion()
+                }
+            })
+        }
     }else{
-        throw HackerBooksError.jsonParsingError
+        completion()
     }
     
 }
 
 
 
-//MARK: Utils
-//Parseo de autores y tags
-func parseStringToArray(string : String) -> [String]{
-    return string.components(separatedBy: ",").map({$0.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).capitalized})
+//MARK: - Constructor de Modelo de libros (Library)
+
+func bookWithJSONDictionary(json: [String:String], context: NSManagedObjectContext) {
+    //Compruebo que estén todos los datos correctos en el JSONDictionary
+    guard let title = json["title"] else {return}
+    guard let authorsString = json["authors"] else {return}
+    guard let tagsString = json["tags"] else {return}
+    guard let imageURLString = json["image_url"] else {return}
+    guard let pdfURLString = json["pdf_url"] else {return}
+    
+    let abook = unicObjectWithValue(title, forEntity: "Book", forKey: "title", context: context)
+    if abook == nil{
+        //No existe, lo creo
+        
+        let authorsArray = parseStringToArray(string: authorsString)
+        let authorsObjcs = Author.arrayAuthorsWithArrayOfString(authors: authorsArray, context: context)
+        
+        let tagsArray = parseStringToArray(string: tagsString)
+        let tagsObjs = BookTag.arrayTagWithArrayOfStrings(arrayTagsString: tagsArray, context: context)
+        
+        let cover = BookCoverPhoto.coverPhotoWithURL(url: imageURLString, context: context)
+        let pdfObj = PDF.pdfWithURL(urlString: pdfURLString, context: context)
+        
+        _ = Book(title: title, authors: authorsObjcs, tags: tagsObjs, cover: cover, pdf: pdfObj, context: context)
+
+    }
+    
 }
 
 

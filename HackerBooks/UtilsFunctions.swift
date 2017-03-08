@@ -9,15 +9,21 @@
 import Foundation
 
 func stringToNSSetAuthors(aSet: NSSet) -> String{
-    let array: [String] = aSet.allObjects.map({ ($0 as! Author).fullName!} )
+    let array: [String] = aSet.allObjects.map{ ($0 as! Author).fullName!}.sorted()
     return array.joined(separator: ", ")
     
     
 }
 
 func stringToNSSetTags(aSet: NSSet) -> String{
-    let array: [String] = aSet.allObjects.map({ ($0 as! BookTag).name!} )
+    let arrayBookTag: [BookTag] = aSet.allObjects.map{ $0 as! BookTag }
+    let array : [String] = arrayBookTag.map{ $0.name! }
     return array.joined(separator: ", ")
     
     
+}
+
+//Parseo de autores y tags
+func parseStringToArray(string : String) -> [String]{
+    return string.components(separatedBy: ",").map({$0.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).capitalized})
 }

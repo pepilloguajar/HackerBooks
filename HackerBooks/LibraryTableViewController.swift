@@ -27,9 +27,25 @@ class LibraryTableViewController: UITableViewController, UISearchResultsUpdating
         
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //MARK: Cargamos la librery
+        
+        //quito temporalment el delegado y datasourde de la tableView mientras se carga el modelo
+        self.tableView.delegate = nil
+        self.tableView.dataSource = nil
+        guard let context = context else {return}
+        downloadAndProcessionJSON(context: context, completion: {
+            
+            //Los vuelvo a asignar y recargo la tableView
+            self.tableView.delegate = self
+            self.tableView.dataSource = self
+            self.tableView.reloadData()
+        })
+        
         title = "Library"
         //subscribe()
         
+        // searchController para busqueda de libros
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
         definesPresentationContext = true

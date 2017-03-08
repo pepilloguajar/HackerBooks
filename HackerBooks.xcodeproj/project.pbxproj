@@ -112,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				920250C71E6761010014D91E /* CoreDataManager.swift */,
+				929BF16F1E40F69000698665 /* JSONProcessing.swift */,
 			);
 			name = Manager;
 			sourceTree = "<group>";
@@ -207,7 +208,6 @@
 				92E2FDAB1E69795200DBA826 /* PDF+Utils.swift */,
 				92E2FDBF1E6C3A2700DBA826 /* Annotation+Utils.swift */,
 				929BF16B1E40ED2B00698665 /* MultiDictionary.swift */,
-				929BF16F1E40F69000698665 /* JSONProcessing.swift */,
 				929BF1711E40F92200698665 /* Errors.swift */,
 				920250CA1E6831360014D91E /* HackerBooks.xcdatamodeld */,
 			);
