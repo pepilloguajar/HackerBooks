@@ -74,6 +74,23 @@ extension Book{
     }
     
     
+    class func bookForSearch(_ text: String) -> NSFetchRequest<Book>{
+        
+        let fetchRequest: NSFetchRequest<Book> = Book.fetchRequest()
+        fetchRequest.fetchBatchSize = 20
+        
+        
+        let titleBook = NSSortDescriptor(key: "title", ascending: true)
+        fetchRequest.sortDescriptors = [titleBook]
+        
+        fetchRequest.predicate = NSPredicate(format: "title contains[c] %@ OR tags.name contains[c] %@ OR authors.fullName contains[c] %@" , argumentArray: [text, text, text])
+        
+        
+        return fetchRequest
+    }
+
+    
+    
     //MARK: - Utils
     class func bookIsFavorite(book: Book) -> Bool{
         let bookTags = book.tags?.allObjects as! [BookTag]

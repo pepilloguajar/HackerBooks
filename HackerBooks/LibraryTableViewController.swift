@@ -13,6 +13,7 @@ class LibraryTableViewController: UITableViewController, UISearchResultsUpdating
     
     //Core Data
     internal var _fetchedResultsController: NSFetchedResultsController<BookTag>? = nil
+    internal var _fetchedResultsControllerSearch: NSFetchedResultsController<Book>? = nil
     internal var context: NSManagedObjectContext?
     
     let searchController = UISearchController(searchResultsController: nil)
@@ -64,7 +65,7 @@ class LibraryTableViewController: UITableViewController, UISearchResultsUpdating
 
     //MARK: - Protocolo searchViewjh
     public func updateSearchResults(for searchController: UISearchController){
-        _fetchedResultsController = nil
+        _fetchedResultsControllerSearch = nil
         self.tableView.reloadData()
     }
     
@@ -92,7 +93,7 @@ class LibraryTableViewController: UITableViewController, UISearchResultsUpdating
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if self.searchController.searchBar.text?.lengthOfBytes(using: .utf8) != 0{
-            return self.fetchedResultsController.sections![section].numberOfObjects
+            return self.fetchedResultsControllerSearch.sections![section].numberOfObjects
         }else{
             
             do {
@@ -170,8 +171,15 @@ class LibraryTableViewController: UITableViewController, UISearchResultsUpdating
         }
         guard let acell = cell else { return cell! }
         //let cell = tableView.dequeueReusableCell(withIdentifier: "BookCell", for: indexPath)
-        let bookTag = self.fetchedResultsController.object(at: indexPath)
-        self.configureCell(acell, withBook: bookTag.books!)
+        if self.searchController.searchBar.text?.lengthOfBytes(using: .utf8) != 0{
+            let book = self.fetchedResultsControllerSearch.object(at: indexPath)
+            self.configureCell(acell, withBook: book)
+        }else{
+            let bookTag = self.fetchedResultsController.object(at: indexPath)
+            self.configureCell(acell, withBook: bookTag.books!)
+        }
+        //let bookTag = self.fetchedResultsController.object(at: indexPath)
+        //self.configureCell(acell, withBook: bookTag.books!)
         return acell
         
         
@@ -181,11 +189,22 @@ class LibraryTableViewController: UITableViewController, UISearchResultsUpdating
     //Al seleccionar un elemento de la tabla
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let obj = self._fetchedResultsController?.object(at: indexPath)
-        guard let bookTag = obj, let context = context else {return}
-        let bookVC = BookViewController(book: bookTag.books!, context: context)
+        if self.searchController.searchBar.text?.lengthOfBytes(using: .utf8) != 0{
+            
+            guard let book = self._fetchedResultsControllerSearch?.object(at: indexPath), let context = context else {return}
+            let bookVC = BookViewController(book: book, context: context)
+            self.navigationController?.pushViewController(bookVC, animated: true)
+            self.searchController.searchBar.text? = ""
+
+            
+        }else{
+
+            guard let bookTag = self._fetchedResultsController?.object(at: indexPath) , let context = context else {return}
+            let bookVC = BookViewController(book: bookTag.books!, context: context)
+            self.navigationController?.pushViewController(bookVC, animated: true)
+
+        }
         
-        self.navigationController?.pushViewController(bookVC, animated: true)
         
         
         
