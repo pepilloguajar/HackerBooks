@@ -66,6 +66,19 @@ class AddEditNoteViewController: UIViewController {
     }
     
     
+    @IBAction func sharedNote(_ sender: Any) {
+        guard let noteText = self.aNote?.text else{return}
+        guard let title = self.book.title else{return}
+        let text = "Te paso la nota que he tomado del libro \(title): \nNota: \(noteText)"
+        guard let img = UIImage(data: self.book.coverPhoto?.data as! Data) else {return}
+        
+        
+        let vc = UIActivityViewController(activityItems: [text, img], applicationActivities: nil)
+        self.present(vc, animated: true) { 
+            print("qué hago aquí")
+        }
+        
+    }
     
     func syncView() {
         guard let text = self.aNote?.text else {return}

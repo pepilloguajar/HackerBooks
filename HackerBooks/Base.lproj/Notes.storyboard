@@ -80,6 +80,9 @@
                                 <segue destination="lTn-gI-Wid" kind="show" identifier="addNote" id="Xes-FR-y0Q"/>
                             </connections>
                         </barButtonItem>
+                        <connections>
+                            <outlet property="titleView" destination="kso-b3-JMm" id="Svg-Vv-Z4E"/>
+                        </connections>
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="kso-b3-JMm" id="eB5-6t-8xB"/>
@@ -131,6 +134,13 @@
                             <constraint firstItem="oKH-By-fyA" firstAttribute="top" secondItem="flX-Oy-XVN" secondAttribute="bottom" constant="8" id="wSg-Cz-8PR"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="5Lm-ZS-V7a">
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="KFx-eU-7hA">
+                            <connections>
+                                <action selector="sharedNote:" destination="lTn-gI-Wid" id="5kA-hG-nXT"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="textNote" destination="oKH-By-fyA" id="KY5-5j-r17"/>
                         <outlet property="trashButton" destination="T1N-wG-yG9" id="cLu-us-4gt"/>
@@ -145,7 +155,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ATm-GX-TZJ" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="DC0-Lr-Me0">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="DC0-Lr-Me0">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

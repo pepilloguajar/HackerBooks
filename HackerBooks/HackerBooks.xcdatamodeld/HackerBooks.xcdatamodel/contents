@@ -35,8 +35,8 @@
         <relationship name="tag" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Tag" inverseName="bookTags" inverseEntity="Tag" syncable="YES"/>
     </entity>
     <entity name="PDF" representedClassName="PDF" syncable="YES" codeGenerationType="class">
-        <attribute name="data" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="urlString" attributeType="String" syncable="YES"/>
+        <attribute name="data" optional="YES" attributeType="Binary" storedInTruthFile="YES" syncable="YES"/>
+        <attribute name="urlString" attributeType="String" indexed="YES" syncable="YES"/>
         <relationship name="book" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Book" inverseName="pdf" inverseEntity="Book" syncable="YES"/>
     </entity>
     <entity name="Tag" representedClassName="Tag" syncable="YES" codeGenerationType="class">
