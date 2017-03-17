@@ -110,7 +110,11 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RyI-Ya-ale">
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <items>
-                                    <barButtonItem enabled="NO" title="Photo" id="D32-1g-Nm8"/>
+                                    <barButtonItem enabled="NO" title="Photo" id="D32-1g-Nm8">
+                                        <connections>
+                                            <segue destination="lYL-CB-lqb" kind="presentation" identifier="photoView" id="wPe-wy-ORm"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="4dx-4X-niS"/>
                                     <barButtonItem enabled="NO" title="Item" systemItem="trash" id="T1N-wG-yG9">
                                         <connections>
@@ -139,6 +143,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="photoButton" destination="D32-1g-Nm8" id="1cc-WH-CUK"/>
                         <outlet property="textNote" destination="oKH-By-fyA" id="KY5-5j-r17"/>
                         <outlet property="trashButton" destination="T1N-wG-yG9" id="cLu-us-4gt"/>
                     </connections>
@@ -146,6 +151,70 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7A5-6d-qjp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1845.5999999999999" y="-701.19940029985014"/>
+        </scene>
+        <!--Photo View Controller-->
+        <scene sceneID="GZe-RL-LJY">
+            <objects>
+                <viewController id="lYL-CB-lqb" customClass="PhotoViewController" customModule="HackerBooks" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="baR-wd-5iQ"/>
+                        <viewControllerLayoutGuide type="bottom" id="YcO-Ne-I4h"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ggs-jp-1lk">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="heu-15-QU8">
+                                <rect key="frame" x="24" y="93" width="327" height="288"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bookDefault.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="RkK-VN-NEe">
+                                        <rect key="frame" x="0.0" y="0.0" width="327" height="256"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="256" id="CBd-Sf-klv"/>
+                                        </constraints>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Xg-jB-aAb">
+                                        <rect key="frame" x="0.0" y="256" width="327" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="32" id="fqu-Gc-FSs"/>
+                                        </constraints>
+                                        <state key="normal" title="Modificar foto"/>
+                                        <connections>
+                                            <action selector="changePhoto:" destination="lYL-CB-lqb" eventType="touchUpInside" id="r4f-1I-Q1p"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="288" id="0gb-yW-UQM"/>
+                                </constraints>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nsp-sP-8ey">
+                                <rect key="frame" x="321" y="36" width="30" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <state key="normal" title="X">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="closeView:" destination="lYL-CB-lqb" eventType="touchUpInside" id="q3M-Vb-flE"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="heu-15-QU8" firstAttribute="leading" secondItem="Ggs-jp-1lk" secondAttribute="leadingMargin" constant="8" id="B93-av-iT0"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="heu-15-QU8" secondAttribute="trailing" constant="8" id="JIq-oZ-tWd"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Nsp-sP-8ey" secondAttribute="trailing" constant="8" id="NtL-Hp-tbN"/>
+                            <constraint firstItem="RkK-VN-NEe" firstAttribute="top" secondItem="Nsp-sP-8ey" secondAttribute="bottom" constant="16" id="Wr1-Z3-aGa"/>
+                            <constraint firstItem="Nsp-sP-8ey" firstAttribute="top" secondItem="baR-wd-5iQ" secondAttribute="bottom" constant="16" id="bd1-fs-F1c"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="imagePhoto" destination="RkK-VN-NEe" id="Xjs-G3-2Qq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CKn-TH-PIQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1858" y="40"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="SWC-qD-bYz">
@@ -166,6 +235,9 @@
             <point key="canvasLocation" x="13.6" y="-644.52773613193403"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="bookDefault.jpg" width="128" height="128"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Xes-FR-y0Q"/>
     </inferredMetricsTieBreakers>

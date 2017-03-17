@@ -17,6 +17,7 @@ class AddEditNoteViewController: UIViewController {
     
     @IBOutlet weak var textNote: UITextView!
     @IBOutlet weak var trashButton: UIBarButtonItem!
+    @IBOutlet weak var photoButton: UIBarButtonItem!
     
     
     override func viewDidLoad() {
@@ -39,10 +40,10 @@ class AddEditNoteViewController: UIViewController {
             guard let context = book.managedObjectContext else {return}
             
             if aNote == nil{
-                let note = Annotation.annotationForText(text: self.textNote.text, context: context)
-                note.book = book
-                note.creationDate = NSDate()
-                note.modificationDate = note.creationDate
+                let aNote = Annotation.annotationForText(text: self.textNote.text, context: context)
+                aNote.book = book
+                aNote.creationDate = NSDate()
+                aNote.modificationDate = aNote.creationDate
             }else{
                 let newText = self.textNote.text
                 if(self.oldText != newText ){
@@ -67,16 +68,18 @@ class AddEditNoteViewController: UIViewController {
     
     
     @IBAction func shareNote(_ sender: Any) {
-        guard let noteText = self.aNote?.text else{return}
-        guard let title = self.book.title else{return}
-        guard let url = self.book.pdf?.urlString else {return}
-        let text = "Te paso la nota que he tomado del libro \(title): \nNota: \(noteText) \n\(url)"
-        guard let img = UIImage(data: self.book.coverPhoto?.data as! Data) else {return}
-        
-        
-        let vc = UIActivityViewController(activityItems: [text, img], applicationActivities: nil)
-        self.present(vc, animated: true) {
-            print("qué hago aquí")
+        if self.textNote.text != ""{
+            guard let noteText = self.aNote?.text else{return}
+            guard let title = self.book.title else{return}
+            guard let url = self.book.pdf?.urlString else {return}
+            let text = "Te paso la nota que he tomado del libro \(title): \nNota: \(noteText) \n\(url)"
+            guard let img = UIImage(data: self.book.coverPhoto?.data as! Data) else {return}
+            
+            
+            let vc = UIActivityViewController(activityItems: [text, img], applicationActivities: nil)
+            self.present(vc, animated: true) {
+                print("qué hago aquí")
+            }
         }
     }
    
@@ -88,10 +91,32 @@ class AddEditNoteViewController: UIViewController {
             label.text = text
         }
         self.trashButton.isEnabled = true
+        self.photoButton.isEnabled = true
        
     }
 
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "photoView"{
+            guard let context = book.managedObjectContext else {return}
+            if aNote == nil{
+                let aNote = Annotation.annotationForText(text: self.textNote.text, context: context)
+                aNote.book = book
+                aNote.creationDate = NSDate()
+                aNote.modificationDate = aNote.creationDate
+            }else{
+                let newText = self.textNote.text
+                if(self.oldText != newText ){
+                    aNote?.text = newText
+                    aNote?.modificationDate = NSDate()
+                }
+            }
+
+            let vc = segue.destination as! PhotoViewController
+            vc.aNote = aNote
+        }
+        
+    }
     
 
 

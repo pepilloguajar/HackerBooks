@@ -10,6 +10,7 @@
 		920250C31E673BA00014D91E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 920250C21E673BA00014D91E /* CoreData.framework */; };
 		920250C81E6761010014D91E /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920250C71E6761010014D91E /* CoreDataManager.swift */; };
 		920250CC1E6831360014D91E /* HackerBooks.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 920250CA1E6831360014D91E /* HackerBooks.xcdatamodeld */; };
+		921382F91E7BFE1000E2FA04 /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921382F81E7BFE1000E2FA04 /* PhotoViewController.swift */; };
 		9268C0691E708B08007E7B87 /* LibraryController+NSFetchResultControllerSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9268C0681E708B08007E7B87 /* LibraryController+NSFetchResultControllerSearch.swift */; };
 		927088421E6C950400518E5D /* Tag+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927088411E6C950400518E5D /* Tag+Utils.swift */; };
 		929BF16C1E40ED2B00698665 /* MultiDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929BF16B1E40ED2B00698665 /* MultiDictionary.swift */; };
@@ -51,6 +52,7 @@
 		920250C21E673BA00014D91E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		920250C71E6761010014D91E /* CoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		920250CB1E6831360014D91E /* HackerBooks.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HackerBooks.xcdatamodel; sourceTree = "<group>"; };
+		921382F81E7BFE1000E2FA04 /* PhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
 		9268C0681E708B08007E7B87 /* LibraryController+NSFetchResultControllerSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LibraryController+NSFetchResultControllerSearch.swift"; sourceTree = "<group>"; };
 		927088411E6C950400518E5D /* Tag+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tag+Utils.swift"; sourceTree = "<group>"; };
 		929BF16B1E40ED2B00698665 /* MultiDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiDictionary.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 				920250CF1E6852780014D91E /* PDFReaderViewController */,
 				92E2FDB51E6C2A2C00DBA826 /* NotesViewController */,
 				92E2FDBD1E6C358800DBA826 /* AddEditNoteViewController.swift */,
+				921382F81E7BFE1000E2FA04 /* PhotoViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -347,6 +350,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				921382F91E7BFE1000E2FA04 /* PhotoViewController.swift in Sources */,
 				92E2FDB91E6C2A5300DBA826 /* NotesController+UICollectionView.swift in Sources */,
 				929BF1841E451C5B00698665 /* PDFReaderViewController.swift in Sources */,
 				92E2FDB21E6AEC9300DBA826 /* UtilsFunctions.swift in Sources */,
